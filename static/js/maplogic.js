@@ -1,7 +1,8 @@
 // Creating map object
 var myMap = L.map("map", {
-    // center: [40.7128, -74.0059],
-    center: [44.986656, -93.258133],
+  // center: [44.9788, -93.2560],
+  // center: [44.9537, -93.0900],
+  center: [44.9637, -93.1700],
 
     zoom: 11
   });
@@ -15,6 +16,7 @@ var myMap = L.map("map", {
     id: "mapbox/streets-v11",
     accessToken: API_KEY
   }).addTo(myMap);
+
   
   // Use this link to get the geojson data.
   var link1 = "static/data/Minneapolis_neighborhoods.geojson";
@@ -29,3 +31,5 @@ var myMap = L.map("map", {
     // Creating a GeoJSON layer with the retrieved data
     L.geoJson(data).addTo(myMap);
   });
+
+  

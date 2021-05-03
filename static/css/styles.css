@@ -1,15 +1,5 @@
 @charset "UTF-8";
-/*!
-* Start Bootstrap - Scrolling Nav v4.3.0 (https://startbootstrap.com/template/scrolling-nav)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-scrolling-nav/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap v4.6.0 (https://getbootstrap.com/)
- * Copyright 2011-2021 The Bootstrap Authors
- * Copyright 2011-2021 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -70,7 +60,7 @@ body {
 }
 
 header {
-  padding: 200px 0 140px;
+  padding: 200px 0 120px;
   background-image: url("../img/header.png");
   max-width: 100%;
   height: auto;
@@ -78,12 +68,12 @@ header {
   
 }
 
-header h1, h4 {
+header h1, h2, h3, h4 {
   color: #000;
 }
 
 section {
-  padding: 100px 0;
+  padding: 30px 0;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -383,27 +373,27 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-  font-size: 2.5rem;
+  font-size: 2.0rem;
 }
 
 h2, .h2 {
-  font-size: 2rem;
-}
-
-h3, .h3 {
-  font-size: 1.75rem;
-}
-
-h4, .h4 {
   font-size: 1.5rem;
 }
 
-h5, .h5 {
+h3, .h3 {
   font-size: 1.25rem;
 }
 
+h4, .h4 {
+  font-size: 1.0rem;
+}
+
+h5, .h5 {
+  font-size: .75rem;
+}
+
 h6, .h6 {
-  font-size: 1rem;
+  font-size: .5rem;
 }
 
 .lead {
@@ -440,6 +430,10 @@ hr {
   margin-bottom: 1rem;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.notes {
+  color: red
 }
 
 small,
