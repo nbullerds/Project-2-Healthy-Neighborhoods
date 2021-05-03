@@ -69,35 +69,68 @@
                             <div id="map"></div>
                         </div>
 
+                        <!-- summary table div -->
                         <div id="summary-table">
-                            <p>Control layers isn't working, should have a control layer "sandwich" that displays all
+                            <p class="notes">Control layers isn't working, should have a control layer "sandwich" that
+                                displays all
                                 Google Places options the in the upper right corner.</p>
-                            <p>Results summary table will go here. Configured to show all parametrics for chosen
+
+
+
+                            <h2>Places Near Neighborhood</h2>
+
+                            <table width=100%>
+                                <tr valign=bottom>
+                                    <th>Grocery</th>
+                                    <th>Parks</th>
+                                    <th>Fitness<br>Centers</th>
+                                    <th>Restaurants<br>(non-fast food)</th>
+                                    <th>Schools</th>
+                                    <th>Religious<br>Spaces</th>
+                                </tr>
+                                <tr>
+                                    <td>{grocery}</td>
+                                    <td>{parks}</td>
+                                    <td>{fitness}</td>
+                                    <td>{food}</td>
+                                    <td>{schools}</td>
+                                    <td>{religious}</td>
+                                </tr>
+                            </table>
+                            <br>
+                            <p class="notes">Results summary table will go here. Configured to show all parametrics for
+                                chosen
                                 neighborhood.</p>
                         </div>
+
+
                     </div>
 
                     <div class="col-lg-4">
-                        <h3>Demographics</h3>
-                        <p>Table here. Not sure how to pull the demographics</p>
-                        <p>NeighborhoodPopulation<br>
-                            NumberofHouseholds<br>
-                            AverageHouseholdIncome<br>
-                            Unemployment</p>
+                        <div class="container">
+                            <h2>Demographics of {Neighborhood}</h2>
+                            <!-- Demographics from selected neighborhood-->
+                            <p><b>Population:</b> {population}</p>
+                            <p><b>Number of Households:</b> {households}</p>
+                            <p><b>Average Income ($):</b> {income}</p>
+                            <p><b>Unemployment (%):</b> {unemployment}</p>
+                        </div>
+                        <p class="notes">Auto-occupy table from neighborhood data.</p>
 
 
-                        <br>
-                        <h3>Age Makeup of Neighborhood</h3>
-                        <p>Pie chart here. Data based on selected neighborhood.</p>
-
-                        <div>
-                            <a href="http://placeholder.com"><img src="https://via.placeholder.com/200"></a>
+                        <div class="container"><br>
+                            <h2>Age Makeup of Neighborhood</h2>
+                            <!-- pie div -->
+                            <div id="pie-container">
+                                <a href="http://placeholder.com"><img src="https://via.placeholder.com/200"></a>
+                            </div>
+                            <p class="notes">Pie chart here. Data based on selected neighborhood.</p>
                         </div>
 
 
-                        <br>
-                        <h3>Walkability Score</h3>
-                        <div>
+                        <div class="container"><br>
+                            <h2>Walkability Score</h2>
+                            <!-- walkscore div -->
                             <script type='text/javascript'>
                                 var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
                                 var ws_address = 'Minneapolis, MN';
@@ -119,30 +152,51 @@
                             <script type='text/javascript'
                                 src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
                         </div>
-                        <p>Address for the neighborhood center is located in a CSV file in the data folder. The address
-                            can be called in as a
-                            variable when the neighborhood is selected. This example is just for the city of Minneapolis
-                            for illustration
-                            purposes.
+                        <p class="notes">Address for the neighborhood center is located in a CSV file in the data
+                            folder. The
+                            address can be called in as a variable when the neighborhood is selected. This example is
+                            just for the city of
+                            Minneapolis for illustration purposes.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+        </div>
     </section>
 
 
     <section id="chart2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <h3>Sunburst Title</h3>
-                    <!-- sunburst div -- may need to change the name -->
-                    <div id="sunburst-container">
-                        <div id="sunburst">
-                            <div>
-                                <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
+        <div class="container text-center">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h2>Compare Demographics Between Neighborhoods</h2>
+                        <!-- sunburst div -- may need to change the name -->
+                        <div id="sunburst-container">
+                            <div id="sunburst">
+                                <div>
+                                    <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="container">
+                            <br>
+                            <label><b>Choose a metric:</b></label>
+                            <!-- Metric from the database-->
+                            <select>
+                                <option>Population</option>
+                                <option>Number of Households</option>
+                                <option>Average Income ($)</option>
+                                <option>Unemployment (%)</option>
+                            </select>
+                            <br><br><p class="notes">Choosing a metric from the dropdown will change the sunburst.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -150,7 +204,7 @@
         </div>
     </section>
 
-
+    <hr>
 
     <section id="about">
         <div class="container">
@@ -222,8 +276,10 @@
                         Data for the dashboard was derived from various sources:
                     <ul>
                         <li><a href="mncompass.org" target="_blank">Minnesota Compass</a> derives data from the 2010
-                            census counts, 2015-2019 American Community Survey (ACS) 5-year estimates, and Longitudianl
-                            Employer-Household Dynamics (LEHD). A CSV file of the ACS survey of all the neighborhoods
+                            census counts, 2015-2019 American Community Survey (ACS) 5-year estimates, and
+                            Longitudianl
+                            Employer-Household Dynamics (LEHD). A CSV file of the ACS survey of all the
+                            neighborhoods
                             (101) in Minneapolis and St. Paul was downloaded and an ETL process was performed.</li>
                         <li>Latitude and longitude data was obtained for Minneapolis at <a
                                 href="https://opendata.minneapolismn.gov/datasets/minneapolis-neighborhoods"
@@ -231,14 +287,15 @@
                                 Minneapolis</a>. St. Paul data was obtained from the <a
                                 href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. If
                             necessary, the data was converted to geojson format. </li>
-                        <li>Data for the types/places on the map were obtained using Google Places then stored in the
+                        <li>Data for the types/places on the map were obtained using Google Places then stored in
+                            the
                             database.</li>
                         <li>Data for the neighborhood address for Walkscore for Minneapolis was found at the <a
                                 href="https://apps.ci.minneapolis.mn.us/cofm/Neighborhood-Organizations/"
                                 target="/blank">City of Minneapolis</a>. St. Paul data was obtained from the <a
                                 href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. CSV file
                             containing the adddresses was read into the Walkscore Javacript snippet. </li>
-
+                    </ul>
                 </div>
             </div>
         </div>
