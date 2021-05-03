@@ -2,12 +2,14 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
+  width: 100%;
+
 }
 
 #map-container {
     position: relative;
-    height: 600px;
-    width: 600px;
+    height: 500px;
+    width: 100%;
 }
 
 #map {
@@ -15,3 +17,7 @@ body {
   height: inherit;
   width: inherit;
 }  
+
+.leaflet-interactive {
+  cursor: pointer;
+}
