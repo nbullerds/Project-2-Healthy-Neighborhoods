@@ -18,12 +18,12 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
 }).addTo(myMap);
 
 
-
 // Links to get the geojson data.
 var link1 = "static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "static/data/StPaul_neighborhoods.geojson";
 
-// Grab Minneapolis GeoJSON data..
+
+// Grab Minneapolis GeoJSON data.
 d3.json(link1).then(function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -112,15 +112,69 @@ d3.json(link2).then(function (data) {
   }).addTo(myMap);
 });
 
+
 // Add layer control
-// https://leafletjs.com/reference-1.7.1.html#control-layers
-
-var basemap = {
-  "map": map
+// Create basemap object
+var baseMaps = {
+  "Map": map
 };
 
-var overlays = {
-"Marker": marker
+// Initialize layer groups
+// need correct names
+var layers = {
+  Grocery: new L.LayerGroup(),
+  Parks: new L.LayerGroup(),
+  FitnessCenters: new L.LayerGroup,
+  Restaurants: new L.LayerGroup,
+  Schools: new L.LayerGroup,
+  Churches: new L.LayerGroup
 };
 
-L.control.layers(basemap, overlays).addTo(myMap);
+// Create overlay object to add to layer control
+var overlayMaps = {
+  "Grocery Stores": layers.Grocery,
+  "Parks": layers.Parks,
+  "Fitness Centers": layers.FitnessCenters,
+  "Restaurants": layers.Restaurants,
+  "Schools": layers.Schools,
+  "Churches": layers.Churches
+};
+
+// Add layer control to map
+// Null to hide the baseMap
+L.control.layers(null, overlayMaps, {
+  //collapsed:false
+}).addTo(myMap);
+
+// Benji's code sample
+// function whenthingisclicked(event){
+//   event.somethingorother
+
+//   updateToNeighborhood(neighborhoodthatwasclickedupon)
+// }
+
+// function updateToNeighborhood(neighborhood){
+//   var csv1, csv2, csv3;
+//   function doAThing(){
+//     if(sourcesRecived === 3){
+//       //do our stuff here
+
+//     }
+//   }
+//   kerry.csv('static/data/bycsv.csv', (data) => {
+//     csv1 = data;
+//     doAThing();
+//   });
+//   kerry.csv('static/data/mycsv2.csv', (data) => {
+//     csv2 = data;
+//     doAThing();
+//   });
+// }
+
+/// items to occupy dropdown
+//Grocery
+//Parks
+//Fitness Centers
+//Restaurants
+//Schools
+//Churches
