@@ -16,6 +16,7 @@
 
     <!-- d3 JavaScript -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="static/js/d3Caching.js"></script>
 
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/styles.css">
@@ -71,13 +72,7 @@
 
                         <!-- summary table div -->
                         <div id="summary-table">
-                            <p class="notes">Control layers isn't working, should have a control layer "sandwich" that
-                                displays all
-                                Google Places options the in the upper right corner.</p>
-
-
-
-                            <h2>Places Near Neighborhood</h2>
+                            <h2>Places Near {Neighborhood}</h2>
 
                             <table width=100%>
                                 <tr valign=bottom>
@@ -110,16 +105,18 @@
                         <div class="container">
                             <h2>Demographics of {Neighborhood}</h2>
                             <!-- Demographics from selected neighborhood-->
-                            <p><b>Population:</b> {population}</p>
-                            <p><b>Number of Households:</b> {households}</p>
-                            <p><b>Average Income ($):</b> {income}</p>
-                            <p><b>Unemployment (%):</b> {unemployment}</p>
+                            <table width="100%">
+                                <tr><td align="right" width="50%"><b>Population:</b></td><td align="left" width="50%">{population}</td></tr>
+                                <tr><td align="right"><b>Households:</b></td><td align="left">{households}</td></tr>
+                                <tr><td align="right"><b>Median Income:</b></td><td align="left">${income}</td></tr>
+                                <tr><td align="right"><b>Unemployment:</b></td><td align="left">{unemployment}%</td></tr>
+                            </table>
                         </div>
-                        <p class="notes">Auto-occupy table from neighborhood data.</p>
+                        <p class="notes">Auto-occupy table from selected neighborhood data.</p>
 
 
                         <div class="container"><br>
-                            <h2>Age Makeup of Neighborhood</h2>
+                            <h2>Age Makeup of {Neighborhood}</h2>
                             <!-- pie div -->
                             <div id="pie-container">
                                 <a href="http://placeholder.com"><img src="https://via.placeholder.com/200"></a>
@@ -180,20 +177,24 @@
                                 <div>
                                     <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
                                 </div>
+                                <p class="notes">Need an event handler to change the chart from the dropdown. Determine what is the default (population?).</p>
                             </div>
                         </div>
                     </div>
 
+
+
+                    <!-- need an event handler for the dropdown-->
                     <div class="col-lg-4">
                         <div class="container">
                             <br>
                             <label><b>Choose a metric:</b></label>
                             <!-- Metric from the database-->
-                            <select>
-                                <option>Population</option>
-                                <option>Number of Households</option>
-                                <option>Average Income ($)</option>
-                                <option>Unemployment (%)</option>
+                            <select class="form-control browser-default dropdown" id="dd">
+                                <option value="">Population</option>
+                                <option value="">Number of Households</option>
+                                <option value="">Median Income ($)</option>
+                                <option value="">Unemployment (%)</option>
                             </select>
                             <br><br><p class="notes">Choosing a metric from the dropdown will change the sunburst.
                             </p>
@@ -224,6 +225,7 @@
                                 <li>Flask</li>
                                 <li>HTML</li>
                                 <li>CSS</li>
+                                <li>D3</li>
                                 <li>Javascript</li>
                                 <li>Plotly</li>
                                 <li>*** other javascript library used ***
