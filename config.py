@@ -1,3 +1,3 @@
 username = "postgres"
-password = "Hermela1991#"
-gkey = "AIzaSyBvT9pzQ5-YzFH2FqlnY6IMgMsdS3GFU5w"
+password = "1234"
+gkey = "AIzaSyC_b9THwQ7z0y_a_vR8hW_SqDj5XX6hQnE"
