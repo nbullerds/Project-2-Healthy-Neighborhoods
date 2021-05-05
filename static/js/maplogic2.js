@@ -155,37 +155,37 @@ L.control.layers(null, overlayMaps, {
 }).addTo(myMap);
 
 
-// // Omnivore will AJAX-request this file behind the scenes and parse it:
-// // note that there are considerations:
-// // - The CSV file must contain latitude and longitude values, in column
-// //   named roughly latitude and longitude
-// // - The file must either be on the same domain as the page that requests it,
-// //   or both the server it is requested from and the user's browser must
-// //   support CORS.
-// omnivore.csv('../schema/Places_forMap.csv')
-//     .on('ready', function(layer) {
-//         // An example of customizing marker styles based on an attribute.
-//         // In this case, the data, a CSV file, has a column called 'state'
-//         // with values referring to states. Your data might have different
-//         // values, so adjust to fit.
-//         this.eachLayer(function(marker) {
-//             if (marker.toGeoJSON().properties.placeType === 'supermarket') {
-//                 // The argument to L.mapbox.marker.icon is based on the
-//                 // simplestyle-spec: see that specification for a full
-//                 // description of options.
-//                 marker.setIcon(L.mapbox.marker.icon({
-//                     'marker-color': '#ff8888',
-//                     'marker-size': 'large'
-//                 }));
-//             } else {
-//                 marker.setIcon(L.mapbox.marker.icon({}));
-//             }
-//             // Bind a popup to each icon based on the same properties
-//             marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
-//                 marker.toGeoJSON().properties.placeType);
-//         });
-//     })
-//     .addTo(map);
+// Omnivore will AJAX-request this file behind the scenes and parse it:
+// note that there are considerations:
+// - The CSV file must contain latitude and longitude values, in column
+//   named roughly latitude and longitude
+// - The file must either be on the same domain as the page that requests it,
+//   or both the server it is requested from and the user's browser must
+//   support CORS.
+omnivore.csv('../schema/Places_forMap.csv')
+    .on('ready', function(layer) {
+        // An example of customizing marker styles based on an attribute.
+        // In this case, the data, a CSV file, has a column called 'state'
+        // with values referring to states. Your data might have different
+        // values, so adjust to fit.
+        this.eachLayer(function(marker) {
+            if (marker.toGeoJSON().properties.placeType === 'supermarket') {
+                // The argument to L.mapbox.marker.icon is based on the
+                // simplestyle-spec: see that specification for a full
+                // description of options.
+                marker.setIcon(L.mapbox.marker.icon({
+                    'marker-color': '#ff8888',
+                    'marker-size': 'large'
+                }));
+            } else {
+                marker.setIcon(L.mapbox.marker.icon({}));
+            }
+            // Bind a popup to each icon based on the same properties
+            marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
+                marker.toGeoJSON().properties.placeType);
+        });
+    })
+    .addTo(map);
 
 
 
