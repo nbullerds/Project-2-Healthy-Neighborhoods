@@ -20,6 +20,16 @@
     <!--Plotly-->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+    <!-- Any Chart-->
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-sunburst.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-data-adapter.min.js"></script>
+
     <!-- TA Benji's caching script -->
     <script src="static/js/d3Caching.js"></script>
 
@@ -64,7 +74,8 @@
                     <h1>Welcome</h1>
                     <p class="lead">Welcome to the Healthy Neighborhoods dashboard &mdash; where you can visualize and
                         explore metrics for helping to choose a neighborhood that meets your
-                        healthy lifestyle requirements.</p>
+                        healthy lifestyle requirements.
+                    </p>
                 </div>
             </div>
         </div>
@@ -78,14 +89,6 @@
                         <!-- map div -->
                         <div id="map-container">
                             <div id="map"></div>
-                            <div id="maplist">
-                            <p class="lead">&nbsp;</p>
-                                <ol>
-                                    <li>Hover over neighborhoods. </li>
-                                    <li>Click to get neighborhood name and demographic information. </li>
-                                    <li>Use the checkboxes to locate healthy lifestyle amenities.</li>
-                                </ol>
-                            </div>
                         </div>
 
                         <!-- Commented out the Summary Table for now, may not use-->
@@ -115,115 +118,78 @@
 
                     <div class="col-lg-4">
                         <div class="container">
-                            <h2>Demographics</h2>
-                            <h4>{neighborhood}</h4>
+                            <div id="demo-table">
+                                <h2>Demographics</h2>
+                                <h4>{neighborhood}</h4>
 
-                            <!-- Demographics from selected neighborhood-->
-                            <table width="100%">
-                                <tr>
-                                    <td align="right" width="50%"><b>Population:</b></td>
-                                    <td align="left" width="50%">{population}</td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Households:</b></td>
-                                    <td align="left">{households}</td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Median Income:</b></td>
-                                    <td align="left">${income}</td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Unemployment:</b></td>
-                                    <td align="left">{unemployment}%</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <p class="notes">Needs an event handler.</p>
+                                <!-- Demographics from selected neighborhood-->
+                                <table width="100%" id="demographics">
+                                    <tr>
+                                        <td align="right" width="50%"><b>Population:</b></td>
+                                        <td id="population" align="left" width="50%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Households:</b></td>
+                                        <td align="left">{households}</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Median Income:</b></td>
+                                        <td align="left">${income}</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Unemployment:</b></td>
+                                        <td align="left">{unemployment}%</td>
+                                    </tr>
+                                </table>
+                            </div>
 
+                            <p>&nbsp</p>
+                            <p>&nbsp</p>
 
-                        <div class="container"><br>
-                            <h2>Age Makeup</h2>
-                            <h4>{neighborhood}</h4>
+                            <!-- Address from selected neighborhood-->
+                            <div id="walscore">
+                                <h2>Walkability Score</h2>
+                                <!-- walkscore div -->
+                                <script type='text/javascript'>
+                                    var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
+                                    // This is where the address will go  var ws_address //
+                                    var ws_address = 'Minneapolis, MN';
+                                    var ws_format = 'wide';
+                                    var ws_width = '300';
+                                    var ws_height = '200';
+                                </script>
+                                <style type='text/css'>
+                                    #ws-walkscore-tile {
+                                        position: relative;
+                                        text-align: left
+                                    }
 
-                            <!-- pie div -->
-                            <div id="pie-container" align="middle"></div>
-                            <p class="notes">Needs an event handler.</p>
-                        </div>
-
-
-                        <div class="container" align="middle"><br>
-                            <h2>Walkability Score</h2>
-                            <!-- walkscore div -->
-                            <script type='text/javascript'>
-                                var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
-                                // This is where the address will go  var ws_address //
-                                var ws_address = 'Minneapolis, MN';
-                                var ws_format = 'wide';
-                                var ws_width = '300';
-                                var ws_height = '200';
-                            </script>
-                            <style type='text/css'>
-                                #ws-walkscore-tile {
-                                    position: relative;
-                                    text-align: left
-                                }
-
-                                #ws-walkscore-tile * {
-                                    float: none;
-                                }
-                            </style>
-                            <div id='ws-walkscore-tile'></div>
-                            <script type='text/javascript'
-                                src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
-                        </div>
-                        <p class="notes">Needs an event handler.</p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-    </section>
-
-
-    <section id="chart2" class="bg-light">
-        <div class="container text-center">
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <h2>Compare Demographics Between Neighborhoods</h2>
-                        <!-- sunburst div -- may need to change the name -->
-                        <div id="sunburst-container">
-                            <div id="sunburst">
-                                <div>
-                                    <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
-                                </div>
-                                <p class="notes">Need an event handler to change the chart from the dropdown. Set the
-                                    default to population.</p>
+                                    #ws-walkscore-tile * {
+                                        float: none;
+                                    }
+                                </style>
+                                <div id='ws-walkscore-tile'></div>
+                                <script type='text/javascript'
+                                    src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-
-                    <div class="col-lg-4">
-                        <div class="container">
-                            <br>
-                            <label><b>Choose a metric:</b></label>
-                            <!-- need an event handler for the dropdown-->
-                            <!-- Metric from the database-->
-                            <select class="form-control browser-default dropdown" id="dd"
-                                onchange="optionChanged(this.value)">
-                                <option value="">Population</option>
-                                <option value="">Number of Households</option>
-                                <option value="">Median Income ($)</option>
-                                <option value="">Unemployment (%)</option>
-                            </select>
-                            <br><br>
-                            <p class="notes">Choosing a metric from the dropdown will change the sunburst.
-                            </p>
+    <section id="chart2">
+        <div class=" container text-center">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div>
+                        <h2>Age Makeup</h2>
+                        <h4>{neighborhood}</h4>
+                        <!-- pie div -->
+                        <div id="pie-container center-block">
+                            <div id="pie"></div>
                         </div>
                     </div>
                 </div>
@@ -231,9 +197,35 @@
         </div>
     </section>
 
-    <hr>
 
-    <section id="about">
+    <section id="chart3">
+        <div class=" container text-center">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Compare Demographics Between Neighborhoods</h2>
+                    <label><b>Choose a metric:</b></label>
+                    <!-- need an event handler for the dropdown-->
+                    <!-- Metric from the database-->
+                    <div class="col-lg-8 mx-auto">
+                        <select class="form-control browser-default dropdown" id="dd"
+                            onchange="optionChanged(this.value)">
+                            <option value="">Population</option>
+                            <option value="">Number of Households</option>
+                            <option value="">Median Income ($)</option>
+                            <option value="">Unemployment (%)</option>
+                        </select>
+                    </div>
+                    <!-- sunburst div  -->
+                    <div id="sunburst-container">
+                        <div id="sunburst"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about" class="bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -254,13 +246,13 @@
                                 <li>D3</li>
                                 <li>Javascript</li>
                                 <li>Plotly</li>
-                                <li class="notes">other javascript library used</li>
                                 <li>Google Places API</li>
                                 <li>Leaflet</li>
                             </ul>
                         </li>
                         <li>Working as a team.</li>
-                        <li>Use of libraries new to the team to demonstrate problem-solving and research skills .</li>
+                        <li>Use of libraries new to the team to demonstrate problem-solving and research skills. An
+                            AnyChart javascript library was used for some of the charts.</li>
 
                     </ul>
                 </div>
@@ -268,7 +260,7 @@
         </div>
     </section>
 
-    <section class="bg-light" id="team">
+    <section id="team">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -298,7 +290,7 @@
         </div>
     </section>
 
-    <section id="data">
+    <section id="data" class="bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -349,13 +341,16 @@
         integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
         crossorigin=""></script>
 
+
+
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
 
     <!-- JS  -->
     <!-- <script type="text/javascript" src="static/js/maplogic.js"></script> -->
     <script type="text/javascript" src="static/js/maplogic2.js"></script>
-    <script type="text/javascript" src="static/js/pie.js"></script>
+    <!-- <script type="text/javascript" src="static/js/pie.js"></script> -->
+    <script type="text/javascript" src="static/js/charts.js"></script>
     <!--<script type="text/javascript" src="static/js/places_table.js"></script>-->
 
     <!-- Bootstrap core JS-->

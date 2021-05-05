@@ -38,8 +38,8 @@ d3.json(link1).then(function (data) {
       return {
         color: "white",
         // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-        fillColor: "darkblue",
-        fillOpacity: 0.3,
+        fillColor: "#64b5f6",
+        fillOpacity: 0.5,
         weight: 1.5
       };
     },
@@ -58,12 +58,23 @@ d3.json(link1).then(function (data) {
         mouseout: function (event) {
           layer = event.target;
           layer.setStyle({
-            fillOpacity: 0.3
+            fillOpacity: 0.5
           });
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
         click: function (event) {
+          
+          // console.log("Success Click");
+
           myMap.fitBounds(event.target.getBounds());
+          
+          // var population = d3.select("#population");
+          // var neighborhood = d3.select("#popup-testing").text();
+          
+          // console.log(neighborhood);
+          
+          // population.html("success"); //populates table td
+    
         }
       });
       // Give each feature a pop-up with information pertinent to it
@@ -83,8 +94,8 @@ d3.json(link2).then(function (data) {
       return {
         color: "white",
         // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-        fillColor: "red",
-        fillOpacity: 0.3,
+        fillColor: "#1976d2",
+        fillOpacity: 0.5,
         weight: 1.5
       };
     },
@@ -103,7 +114,7 @@ d3.json(link2).then(function (data) {
         mouseout: function (event) {
           layer = event.target;
           layer.setStyle({
-            fillOpacity: 0.3
+            fillOpacity: 0.5
           });
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
@@ -155,37 +166,38 @@ L.control.layers(null, overlayMaps, {
 }).addTo(myMap);
 
 
-// Omnivore will AJAX-request this file behind the scenes and parse it:
-// note that there are considerations:
-// - The CSV file must contain latitude and longitude values, in column
-//   named roughly latitude and longitude
-// - The file must either be on the same domain as the page that requests it,
-//   or both the server it is requested from and the user's browser must
-//   support CORS.
-omnivore.csv('../schema/Places_forMap.csv')
-    .on('ready', function(layer) {
-        // An example of customizing marker styles based on an attribute.
-        // In this case, the data, a CSV file, has a column called 'state'
-        // with values referring to states. Your data might have different
-        // values, so adjust to fit.
-        this.eachLayer(function(marker) {
-            if (marker.toGeoJSON().properties.placeType === 'supermarket') {
-                // The argument to L.mapbox.marker.icon is based on the
-                // simplestyle-spec: see that specification for a full
-                // description of options.
-                marker.setIcon(L.mapbox.marker.icon({
-                    'marker-color': '#ff8888',
-                    'marker-size': 'large'
-                }));
-            } else {
-                marker.setIcon(L.mapbox.marker.icon({}));
-            }
-            // Bind a popup to each icon based on the same properties
-            marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
-                marker.toGeoJSON().properties.placeType);
-        });
-    })
-    .addTo(map);
+// // Omnivore will AJAX-request this file behind the scenes and parse it:
+// // note that there are considerations:
+// // - The CSV file must contain latitude and longitude values, in column
+// //   named roughly latitude and longitude
+// // - The file must either be on the same domain as the page that requests it,
+// //   or both the server it is requested from and the user's browser must
+// //   support CORS.
+// omnivore.csv('../schema/Places_forMap.csv')
+//     .on('ready', function(layer) {
+//       console.log("success");
+//         // An example of customizing marker styles based on an attribute.
+//         // In this case, the data, a CSV file, has a column called 'state'
+//         // with values referring to states. Your data might have different
+//         // values, so adjust to fit.
+//         this.eachLayer(function(marker) {
+//             if (marker.toGeoJSON().properties.placeType === 'supermarket') {
+//                 // The argument to L.mapbox.marker.icon is based on the
+//                 // simplestyle-spec: see that specification for a full
+//                 // description of options.
+//                 marker.setIcon(L.mapbox.marker.icon({
+//                     'marker-color': '#ff8888',
+//                     'marker-size': 'large'
+//                 }));
+//             } else {
+//                 marker.setIcon(L.mapbox.marker.icon({}));
+//             }
+//             // Bind a popup to each icon based on the same properties
+//             marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
+//                 marker.toGeoJSON().properties.placeType);
+//         });
+//     })
+//     .addTo(map);
 
 
 
