@@ -1,9 +1,12 @@
+console.log("maplogic2.js is loaded");
+
 // Create map object
 var myMap = L.map("map", {
   // center: [44.9788, -93.2560],
   // center: [44.9537, -93.0900],
   center: [44.9637, -93.1700],
   zoom: 11
+
 });
 
 
@@ -18,9 +21,12 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
 }).addTo(myMap);
 
 
-// Links to get the geojson data.
+// Links to get the geojson and csv data.
 var link1 = "static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "static/data/StPaul_neighborhoods.geojson";
+var places = "schema/Places_data_backup.csv"
+var neighborhoods = "schema/Neighborhoods_data_backup.csv"
+var walkscore = "data/MSP_neighborhoods_walkability_address.csv"
 
 
 // Grab Minneapolis GeoJSON data.
@@ -61,8 +67,8 @@ d3.json(link1).then(function (data) {
         }
       });
       // Give each feature a pop-up with information pertinent to it
-      layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
-
+      // layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
+      layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3>");
     }
   }).addTo(myMap);
 });
@@ -106,8 +112,8 @@ d3.json(link2).then(function (data) {
         }
       });
       // Give each feature a pop-up with information pertinent to it
-      layer.bindPopup("<h3>" + feature.properties.name2 + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
-
+      // layer.bindPopup("<h3>" + feature.properties.name2 + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
+      layer.bindPopup("<h3>" + feature.properties.name2 + "</h3>");
     }
   }).addTo(myMap);
 });
@@ -119,25 +125,27 @@ var baseMaps = {
   "Map": map
 };
 
-// Initialize layer groups
+// Initialize layer groups -- data from places csv
 // need correct names
 var layers = {
-  Grocery: new L.LayerGroup(),
-  Parks: new L.LayerGroup(),
-  FitnessCenters: new L.LayerGroup,
-  Restaurants: new L.LayerGroup,
-  Schools: new L.LayerGroup,
-  Churches: new L.LayerGroup
+  supermarket: new L.LayerGroup(),
+  park: new L.LayerGroup(),
+  gym: new L.LayerGroup,
+  restaurant: new L.LayerGroup,
+  school: new L.LayerGroup,
+  church: new L.LayerGroup,
+  transit_station: new L.LayerGroup
 };
 
 // Create overlay object to add to layer control
 var overlayMaps = {
-  "Grocery Stores": layers.Grocery,
-  "Parks": layers.Parks,
-  "Fitness Centers": layers.FitnessCenters,
-  "Restaurants": layers.Restaurants,
-  "Schools": layers.Schools,
-  "Churches": layers.Churches
+  "Churches": layers.church,
+  "Fitness Centers": layers.gym,
+  "Grocery Stores": layers.supermarket,
+  "Parks": layers.park,
+  "Restaurants": layers.restaurant,
+  "Schools": layers.school,
+  "Transit Stations": layers.transit_station
 };
 
 // Add layer control to map
@@ -145,6 +153,46 @@ var overlayMaps = {
 L.control.layers(null, overlayMaps, {
   //collapsed:false
 }).addTo(myMap);
+
+
+// // Omnivore will AJAX-request this file behind the scenes and parse it:
+// // note that there are considerations:
+// // - The CSV file must contain latitude and longitude values, in column
+// //   named roughly latitude and longitude
+// // - The file must either be on the same domain as the page that requests it,
+// //   or both the server it is requested from and the user's browser must
+// //   support CORS.
+// omnivore.csv('../schema/Places_forMap.csv')
+//     .on('ready', function(layer) {
+//         // An example of customizing marker styles based on an attribute.
+//         // In this case, the data, a CSV file, has a column called 'state'
+//         // with values referring to states. Your data might have different
+//         // values, so adjust to fit.
+//         this.eachLayer(function(marker) {
+//             if (marker.toGeoJSON().properties.placeType === 'supermarket') {
+//                 // The argument to L.mapbox.marker.icon is based on the
+//                 // simplestyle-spec: see that specification for a full
+//                 // description of options.
+//                 marker.setIcon(L.mapbox.marker.icon({
+//                     'marker-color': '#ff8888',
+//                     'marker-size': 'large'
+//                 }));
+//             } else {
+//                 marker.setIcon(L.mapbox.marker.icon({}));
+//             }
+//             // Bind a popup to each icon based on the same properties
+//             marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
+//                 marker.toGeoJSON().properties.placeType);
+//         });
+//     })
+//     .addTo(map);
+
+
+
+
+
+
+
 
 // Benji's code sample
 // function whenthingisclicked(event){

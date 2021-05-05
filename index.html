@@ -16,7 +16,15 @@
 
     <!-- d3 JavaScript -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- TA Benji's caching script -->
     <script src="static/js/d3Caching.js"></script>
+
+    <!-- Ominivore Leaflet Plugin -->
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
 
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/styles.css">
@@ -45,7 +53,7 @@
     <header class="bg-primary text-white" background>
         <div class="container text-center">
             <h1>Minneapolis and St. Paul Neighborhoods</h1>
-            <h4>VISUALIZING A HEALTHY COMMUNITY &AMP; LIFESTYLE</h4>
+            <h4>VISUALIZING A HEALTHY COMMUNITY</h4>
         </div>
     </header>
 
@@ -53,8 +61,10 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Dashboard</h1>
-                    <p class="lead">Some text...</p>
+                    <h1>Welcome</h1>
+                    <p class="lead">Welcome to the Healthy Neighborhoods dashboard &mdash; where you can visualize and
+                        explore metrics for helping to choose a neighborhood that meets your
+                        healthy lifestyle requirements.</p>
                 </div>
             </div>
         </div>
@@ -70,35 +80,29 @@
                             <div id="map"></div>
                         </div>
 
-                        <!-- summary table div -->
+                        <!-- Commented out the Summary Table for now, may not use-->
+                        <!-- summary table div
                         <div id="summary-table">
                             <h2>Places Near {Neighborhood}</h2>
-
                             <table width=100%>
-                                <tr valign=bottom>
-                                    <th>Grocery</th>
-                                    <th>Parks</th>
-                                    <th>Fitness<br>Centers</th>
-                                    <th>Restaurants<br>(non-fast food)</th>
-                                    <th>Schools</th>
-                                    <th>Religious<br>Spaces</th>
-                                </tr>
-                                <tr>
-                                    <td>{grocery}</td>
-                                    <td>{parks}</td>
-                                    <td>{fitness}</td>
-                                    <td>{food}</td>
-                                    <td>{schools}</td>
-                                    <td>{religious}</td>
-                                </tr>
+                                <thead>
+                                    <tr valign=bottom>
+                                        <th>Supermarkets</th>
+                                        <th>Parks</th>
+                                        <th>Gyms</th>
+                                        <th>Restaurants</th>
+                                        <th>Schools</th>
+                                        <th>Transit Stations</th>
+                                        <th>Churches</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
                             </table>
                             <br>
                             <p class="notes">Results summary table will go here. Configured to show all parametrics for
                                 chosen
                                 neighborhood.</p>
-                        </div>
-
-
+                        </div> -->
                     </div>
 
                     <div class="col-lg-4">
@@ -106,22 +110,34 @@
                             <h2>Demographics of {Neighborhood}</h2>
                             <!-- Demographics from selected neighborhood-->
                             <table width="100%">
-                                <tr><td align="right" width="50%"><b>Population:</b></td><td align="left" width="50%">{population}</td></tr>
-                                <tr><td align="right"><b>Households:</b></td><td align="left">{households}</td></tr>
-                                <tr><td align="right"><b>Median Income:</b></td><td align="left">${income}</td></tr>
-                                <tr><td align="right"><b>Unemployment:</b></td><td align="left">{unemployment}%</td></tr>
+                                <tr>
+                                    <td align="right" width="50%"><b>Population:</b></td>
+                                    <td align="left" width="50%">{population}</td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><b>Households:</b></td>
+                                    <td align="left">{households}</td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><b>Median Income:</b></td>
+                                    <td align="left">${income}</td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><b>Unemployment:</b></td>
+                                    <td align="left">{unemployment}%</td>
+                                </tr>
                             </table>
                         </div>
                         <p class="notes">Auto-occupy table from selected neighborhood data.</p>
+                        <p class="notes">Needs an event handler.</p>
 
 
                         <div class="container"><br>
-                            <h2>Age Makeup of {Neighborhood}</h2>
+                            <h2>Age Makeup</h2>
                             <!-- pie div -->
-                            <div id="pie-container">
-                                <a href="http://placeholder.com"><img src="https://via.placeholder.com/200"></a>
-                            </div>
-                            <p class="notes">Pie chart here. Data based on selected neighborhood.</p>
+                            <div id="pie-container"></div>
+                            <p class="notes">Data based on selected neighborhood.</p>
+                            <p class="notes">Needs an event handler.</p>
                         </div>
 
 
@@ -140,7 +156,6 @@
                                     position: relative;
                                     text-align: left
                                 }
-
                                 #ws-walkscore-tile * {
                                     float: none;
                                 }
@@ -155,6 +170,8 @@
                             just for the city of
                             Minneapolis for illustration purposes.
                         </p>
+                        <p class="notes">Needs an event handler.</p>
+
                     </div>
                 </div>
             </div>
@@ -164,7 +181,7 @@
     </section>
 
 
-    <section id="chart2">
+    <section id="chart2"  class="bg-light" >
         <div class="container text-center">
 
             <div class="container">
@@ -177,26 +194,27 @@
                                 <div>
                                     <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
                                 </div>
-                                <p class="notes">Need an event handler to change the chart from the dropdown. Determine what is the default (population?).</p>
+                                <p class="notes">Need an event handler to change the chart from the dropdown. Set the default to population.</p>
                             </div>
                         </div>
                     </div>
 
 
 
-                    <!-- need an event handler for the dropdown-->
                     <div class="col-lg-4">
                         <div class="container">
                             <br>
                             <label><b>Choose a metric:</b></label>
+                            <!-- need an event handler for the dropdown-->
                             <!-- Metric from the database-->
-                            <select class="form-control browser-default dropdown" id="dd">
+                            <select class="form-control browser-default dropdown" id="dd" onchange="optionChanged(this.value)">
                                 <option value="">Population</option>
                                 <option value="">Number of Households</option>
                                 <option value="">Median Income ($)</option>
                                 <option value="">Unemployment (%)</option>
                             </select>
-                            <br><br><p class="notes">Choosing a metric from the dropdown will change the sunburst.
+                            <br><br>
+                            <p class="notes">Choosing a metric from the dropdown will change the sunburst.
                             </p>
                         </div>
                     </div>
@@ -228,14 +246,13 @@
                                 <li>D3</li>
                                 <li>Javascript</li>
                                 <li>Plotly</li>
-                                <li>*** other javascript library used ***
+                                <li class="notes">other javascript library used</li>
                                 <li>Google Places API</li>
                                 <li>Leaflet</li>
                             </ul>
                         </li>
                         <li>Working as a team.</li>
-                        <li>Required one element on the page to be from using a Javascript library that was new to the
-                            team.</li>
+                        <li>Use of libraries new to the team to demonstrate problem-solving and research skills .</li>
 
                     </ul>
                 </div>
@@ -256,6 +273,10 @@
                         <div class="col">
                             <p class="lead">Kerry Harp</p>
                             <p><a href="mailto:kharp@umn.edu">kharp@umn.edu</a></p>
+                            <p>Promoting sustainability in the built environment and the health/wellbeing of occupants.
+                                With degrees in architecture and accreditations in LEED and WELL, Kerry’s value is being
+                                a bridge between the technical and design fields to promote and deploy resilient,
+                                sustainability, and wellbeing strategies.</p>
                         </div>
                         <div class="col">
                             <p class="lead">Sofanit Mengesha</p>
@@ -277,26 +298,20 @@
                     <p class="lead">
                         Data for the dashboard was derived from various sources:
                     <ul>
-                        <li><a href="mncompass.org" target="_blank">Minnesota Compass</a> derives data from the 2010
+                        <li>
+                            <a href="mncompass.org" target="_blank">Minnesota Compass</a> derives data from the 2010
                             census counts, 2015-2019 American Community Survey (ACS) 5-year estimates, and
-                            Longitudianl
-                            Employer-Household Dynamics (LEHD). A CSV file of the ACS survey of all the
-                            neighborhoods
-                            (101) in Minneapolis and St. Paul was downloaded and an ETL process was performed.</li>
-                        <li>Latitude and longitude data was obtained for Minneapolis at <a
-                                href="https://opendata.minneapolismn.gov/datasets/minneapolis-neighborhoods"
-                                target="_blank">Open
-                                Minneapolis</a>. St. Paul data was obtained from the <a
-                                href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. If
-                            necessary, the data was converted to geojson format. </li>
-                        <li>Data for the types/places on the map were obtained using Google Places then stored in
-                            the
-                            database.</li>
-                        <li>Data for the neighborhood address for Walkscore for Minneapolis was found at the <a
-                                href="https://apps.ci.minneapolis.mn.us/cofm/Neighborhood-Organizations/"
-                                target="/blank">City of Minneapolis</a>. St. Paul data was obtained from the <a
-                                href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. CSV file
-                            containing the adddresses was read into the Walkscore Javacript snippet. </li>
+                            Longitudinal Employer-Household Dynamics (LEHD). A CSV file of the ACS survey of all the
+                            neighborhoods (101) in Minneapolis and St. Paul was downloaded and an ETL process was performed.
+                        </li>
+                        <li>
+                            Neighborhood latitude and longitude data for the map was obtained for Minneapolis at <a href="https://opendata.minneapolismn.gov/datasets/minneapolis-neighborhoods" target="_blank">Open Minneapolis</a>. St. Paul data was obtained from the <a href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. If necessary, the data was converted to geojson format.
+                        </li>
+                        <li>Data for the types/places on the map were obtained using <a href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank">Google Places</a> then stored in a Postgres database.
+                        </li>
+                        <li>
+                            Data for the neighborhood address for Walkscore for Minneapolis was found at the <a href="https://apps.ci.minneapolis.mn.us/cofm/Neighborhood-Organizations/" target="/blank">City of Minneapolis</a>. St. Paul data was obtained from the <a href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. CSV file containing the adddresses was read into the Walkscore Javacript snippet.
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -306,7 +321,7 @@
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; 2021, Buller, Harp, Mengesha</p>
+            <p class="m-0 text-center text-white">Copyright &copy; 2021: Buller, Harp, Mengesha</p>
         </div>
     </footer>
 
@@ -314,18 +329,24 @@
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
         integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
         crossorigin=""></script>
+
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
+
     <!-- JS  -->
     <!-- <script type="text/javascript" src="static/js/maplogic.js"></script> -->
     <script type="text/javascript" src="static/js/maplogic2.js"></script>
+    <script type="text/javascript" src="static/js/pie.js"></script>
+    <!--<script type="text/javascript" src="static/js/places_table.js"></script>-->
 
     <!-- Bootstrap core JS-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Core theme JS-->
+
     <script src="static/js/scripts.js"></script>
 
 </body>
