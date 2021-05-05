@@ -14,6 +14,7 @@ body {
 
 }
 
+
 #map {
   position: relative;
   height: inherit;
@@ -22,5 +23,10 @@ body {
 
 .leaflet-interactive {
   cursor: pointer;
+}
+
+#maplist li {
+  font-size: 1.25rem;
+
 }
 
