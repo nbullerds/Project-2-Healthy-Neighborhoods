@@ -1,7 +1,7 @@
 # Project-2-Healthy-Neighborhoods
 
 
-This demonstration shows how to integrate Flask with your HTML and JavaScript code for Project 2 in Data Analytics &amp; Visualization. 
+This dashboard demonstrates how to integrate Flask with HTML and JavaScript code. 
 
 
 Please clone this repository to your desktop and then do the following:
@@ -21,5 +21,4 @@ Additional notes:
 * *NEW:* I've added some database queries. For these to work, you'll have to have the GlobalFirePower database we created in Week 9, Night 1, Activity 08-Stu_CRUD. If you don't have this database, you'll get unpredictable results.
 * *IMPORTANT:* You'll have to update the PostgreSQL username and password (``app.py``) so that they match your own values. You likely have the same username, but your password will (probably) be different.
 * This example uses a Flask server, not LiveServer. **LiveServer doesn't play a role in Project 2.** (Yes, you can use LiveServer for quick changes to your HTML, CSS, and page layout. But it won't properly serve your data to you, because it doesn't know how.)
-* There's a wrinkle when trying to ``jsonify()`` the results of a MongoDB query. I'll eventually try to provide an example here, but please ask for help in the meantime.  
-* *REMEMBER*: In the real world, your server would be running on a completely separate  machine, and the only way you could query its database is using these API endpoints. You wouldn't be allowed to connect to someone else's database directly from JavaScript, and you can't do it that way on this project either. 
+* *REMEMBER*: In the real world, your server would be running on a completely separate machine, and the only way you could query its database is using these API endpoints. You wouldn't be allowed to connect to someone else's database directly from JavaScript, and you can't do it that way on this project either. 
