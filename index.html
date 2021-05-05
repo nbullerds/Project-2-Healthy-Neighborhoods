@@ -78,6 +78,14 @@
                         <!-- map div -->
                         <div id="map-container">
                             <div id="map"></div>
+                            <div id="maplist">
+                            <p class="lead">&nbsp;</p>
+                                <ol>
+                                    <li>Hover over neighborhoods. </li>
+                                    <li>Click to get neighborhood name and demographic information. </li>
+                                    <li>Use the checkboxes to locate healthy lifestyle amenities.</li>
+                                </ol>
+                            </div>
                         </div>
 
                         <!-- Commented out the Summary Table for now, may not use-->
@@ -107,7 +115,9 @@
 
                     <div class="col-lg-4">
                         <div class="container">
-                            <h2>Demographics of {Neighborhood}</h2>
+                            <h2>Demographics</h2>
+                            <h4>{neighborhood}</h4>
+
                             <!-- Demographics from selected neighborhood-->
                             <table width="100%">
                                 <tr>
@@ -128,24 +138,25 @@
                                 </tr>
                             </table>
                         </div>
-                        <p class="notes">Auto-occupy table from selected neighborhood data.</p>
                         <p class="notes">Needs an event handler.</p>
 
 
                         <div class="container"><br>
                             <h2>Age Makeup</h2>
+                            <h4>{neighborhood}</h4>
+
                             <!-- pie div -->
-                            <div id="pie-container"></div>
-                            <p class="notes">Data based on selected neighborhood.</p>
+                            <div id="pie-container" align="middle"></div>
                             <p class="notes">Needs an event handler.</p>
                         </div>
 
 
-                        <div class="container"><br>
+                        <div class="container" align="middle"><br>
                             <h2>Walkability Score</h2>
                             <!-- walkscore div -->
                             <script type='text/javascript'>
                                 var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
+                                // This is where the address will go  var ws_address //
                                 var ws_address = 'Minneapolis, MN';
                                 var ws_format = 'wide';
                                 var ws_width = '300';
@@ -156,6 +167,7 @@
                                     position: relative;
                                     text-align: left
                                 }
+
                                 #ws-walkscore-tile * {
                                     float: none;
                                 }
@@ -164,12 +176,6 @@
                             <script type='text/javascript'
                                 src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
                         </div>
-                        <p class="notes">Address for the neighborhood center is located in a CSV file in the data
-                            folder. The
-                            address can be called in as a variable when the neighborhood is selected. This example is
-                            just for the city of
-                            Minneapolis for illustration purposes.
-                        </p>
                         <p class="notes">Needs an event handler.</p>
 
                     </div>
@@ -181,7 +187,7 @@
     </section>
 
 
-    <section id="chart2"  class="bg-light" >
+    <section id="chart2" class="bg-light">
         <div class="container text-center">
 
             <div class="container">
@@ -194,7 +200,8 @@
                                 <div>
                                     <a href="http://placeholder.com"><img src="https://via.placeholder.com/600"></a>
                                 </div>
-                                <p class="notes">Need an event handler to change the chart from the dropdown. Set the default to population.</p>
+                                <p class="notes">Need an event handler to change the chart from the dropdown. Set the
+                                    default to population.</p>
                             </div>
                         </div>
                     </div>
@@ -207,7 +214,8 @@
                             <label><b>Choose a metric:</b></label>
                             <!-- need an event handler for the dropdown-->
                             <!-- Metric from the database-->
-                            <select class="form-control browser-default dropdown" id="dd" onchange="optionChanged(this.value)">
+                            <select class="form-control browser-default dropdown" id="dd"
+                                onchange="optionChanged(this.value)">
                                 <option value="">Population</option>
                                 <option value="">Number of Households</option>
                                 <option value="">Median Income ($)</option>
@@ -302,15 +310,26 @@
                             <a href="mncompass.org" target="_blank">Minnesota Compass</a> derives data from the 2010
                             census counts, 2015-2019 American Community Survey (ACS) 5-year estimates, and
                             Longitudinal Employer-Household Dynamics (LEHD). A CSV file of the ACS survey of all the
-                            neighborhoods (101) in Minneapolis and St. Paul was downloaded and an ETL process was performed.
+                            neighborhoods (101) in Minneapolis and St. Paul was downloaded and an ETL process was
+                            performed.
                         </li>
                         <li>
-                            Neighborhood latitude and longitude data for the map was obtained for Minneapolis at <a href="https://opendata.minneapolismn.gov/datasets/minneapolis-neighborhoods" target="_blank">Open Minneapolis</a>. St. Paul data was obtained from the <a href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. If necessary, the data was converted to geojson format.
+                            Neighborhood latitude and longitude data for the map was obtained for Minneapolis at <a
+                                href="https://opendata.minneapolismn.gov/datasets/minneapolis-neighborhoods"
+                                target="_blank">Open Minneapolis</a>. St. Paul data was obtained from the <a
+                                href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. If
+                            necessary, the data was converted to geojson format.
                         </li>
-                        <li>Data for the types/places on the map were obtained using <a href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank">Google Places</a> then stored in a Postgres database.
+                        <li>Data for the types/places on the map were obtained using <a
+                                href="https://developers.google.com/maps/documentation/places/web-service/overview"
+                                target="_blank">Google Places</a> then stored in a Postgres database.
                         </li>
                         <li>
-                            Data for the neighborhood address for Walkscore for Minneapolis was found at the <a href="https://apps.ci.minneapolis.mn.us/cofm/Neighborhood-Organizations/" target="/blank">City of Minneapolis</a>. St. Paul data was obtained from the <a href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. CSV file containing the adddresses was read into the Walkscore Javacript snippet.
+                            Data for the neighborhood address for Walkscore for Minneapolis was found at the <a
+                                href="https://apps.ci.minneapolis.mn.us/cofm/Neighborhood-Organizations/"
+                                target="/blank">City of Minneapolis</a>. St. Paul data was obtained from the <a
+                                href="https://information.stpaul.gov" target="_blank">City of St. Paul</a>. CSV file
+                            containing the adddresses was read into the Walkscore Javacript snippet.
                         </li>
                     </ul>
                 </div>

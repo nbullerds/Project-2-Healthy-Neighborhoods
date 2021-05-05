@@ -13,7 +13,6 @@ showlegend: false
 var data = [trace1];
 
 var layout = {
-    title: "{neighborhood}",
     width: 250,
     height: 250,
     margin: {"t":25, "b":0, "l":0, "r":0}
