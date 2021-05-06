@@ -63,17 +63,23 @@ d3.json(link1).then(function (data) {
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
         click: function (event) {
-          
-          // console.log("Success Click");
-
           myMap.fitBounds(event.target.getBounds());
+
+          console.log("Success of Function");
+
+          var population = d3.select("#population");
+          var households = d3.select("#households");
+          var income = d3.select("#income");
+          var unemployment = d3.select("#unemployment");
           
-          // var population = d3.select("#population");
           // var neighborhood = d3.select("#popup-testing").text();
-          
           // console.log(neighborhood);
           
-          // population.html("success"); //populates table td
+          population.html("Click Success"); //populates table td
+          households.html("Click Success"); //populates table td
+          income.html("Click Success"); //populates table td
+          unemployment.html("Click Success"); //populates table td
+
     
         }
       });
