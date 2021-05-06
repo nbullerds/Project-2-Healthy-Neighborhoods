@@ -130,15 +130,15 @@
                                     </tr>
                                     <tr>
                                         <td align="right"><b>Households:</b></td>
-                                        <td align="left">{households}</td>
+                                        <td id="households" align="left"></td>
                                     </tr>
                                     <tr>
                                         <td align="right"><b>Median Income:</b></td>
-                                        <td align="left">${income}</td>
+                                        <td id="income" align="left"></td>
                                     </tr>
                                     <tr>
                                         <td align="right"><b>Unemployment:</b></td>
-                                        <td align="left">{unemployment}%</td>
+                                        <td id="unemployment" align="left"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -147,36 +147,39 @@
                             <p>&nbsp</p>
 
                             <!-- Address from selected neighborhood-->
-                            <div id="walscore">
-                                <h2>Walkability Score</h2>
-                                <!-- walkscore div -->
-                                <script type='text/javascript'>
-                                    var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
-                                    // This is where the address will go  var ws_address //
-                                    var ws_address = 'Minneapolis, MN';
-                                    var ws_format = 'wide';
-                                    var ws_width = '300';
-                                    var ws_height = '200';
-                                </script>
-                                <style type='text/css'>
-                                    #ws-walkscore-tile {
-                                        position: relative;
-                                        text-align: left
-                                    }
+                            <div class="container>
+                                <div id="walkscore">
+                                    <h2>Walkability Score</h2>
+                                    <!-- walkscore div -->
+                                    <div align="center">
+                                    <script type='text/javascript'>
+                                        var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
+                                        // This is where the address will go  var ws_address //
+                                        var ws_address = 'Minneapolis, MN';
+                                        var ws_format = 'wide';
+                                        var ws_width = '300';
+                                        var ws_height = '200';
+                                    </script>
+                                    <style type='text/css'>
+                                        #ws-walkscore-tile {
+                                            position: relative;
+                                            text-align: left
+                                        }
 
-                                    #ws-walkscore-tile * {
-                                        float: none;
-                                    }
-                                </style>
-                                <div id='ws-walkscore-tile'></div>
-                                <script type='text/javascript'
-                                    src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
+                                        #ws-walkscore-tile * {
+                                            float: none;
+                                        }
+                                    </style>
+                                    <div id='ws-walkscore-tile'></div>
+                                    <script type='text/javascript'
+                                        src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
 
