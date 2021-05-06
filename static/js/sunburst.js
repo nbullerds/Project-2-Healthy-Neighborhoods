@@ -1,4 +1,4 @@
-console.log("charts.js is loaded");
+console.log("sunburst.js is loaded");
 
 function structureData(data) {
     const structureData = new Map();
@@ -42,8 +42,9 @@ function makeSunburstData(nicedata) {
         
     }
     return output;
-}
-d3.csv('./data/MSP_neighborhoods.csv').then(function (data) {
+};
+
+d3.csv('../data/MSP_neighborhoods.csv').then(function (data) {
     console.log("Logging data:");
     console.log(data);
     var nicerData = structureData(data);
@@ -86,30 +87,4 @@ d3.csv('./data/MSP_neighborhoods.csv').then(function (data) {
             '85 years and older',
         ],
     };
-
-    
-    const pieChartValues = Object.keys(cols).map(() => 0);//gets us array of 0s
-    //don't worry about it to much
-    for (let i = 0; i < data.length; i++) {
-        let j = 0;
-        for (let key in cols) {
-            for (let k = 0; k < cols[key].length; k++) {
-                pieChartValues[j] += +data[i][cols[key][k]];
-            }
-            j++;
-        }
-    }
-    //start worrying again
-    console.log("plotly pie chart values");
-    console.log(pieChartValues);
-    Plotly.newPlot('pie', [{
-        values: pieChartValues,
-        labels: Object.keys(cols),
-        type: 'pie',
-        marker: {colors: ["#bcddf8", "#64b5f6", "#1976d2", "#0a529a", "#032f5a"]},
-    }], {
-        height: 450,
-        width: 550
-        // config: {responsive: true}
-    });
 });
