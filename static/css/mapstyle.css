@@ -52,3 +52,8 @@ body {
 .homefooter {
   padding-bottom: 3rem !important;
 }
+
+.notes {
+  color: red;
+  font-size: 11px;
+}

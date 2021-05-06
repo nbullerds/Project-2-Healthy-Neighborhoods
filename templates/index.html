@@ -30,9 +30,6 @@
     <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-data-adapter.min.js"></script>
 
-    <!-- TA Benji's caching script -->
-    <!-- <script src="../static/js/d3Caching.js"></script> -->
-
     <!-- Ominivore Leaflet Plugin -->
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
 
@@ -146,9 +143,35 @@
                                     </tr>
                                 </table>
                             </div>
+                            <p class="notes">This demographics table is responding to map click events (mpls only -- because the two cities are pulling from different geojsons).</p>
+                            <p class="notes">&nbsp;</p>
 
-                            <p>&nbsp</p>
-                            <p>&nbsp</p>
+                            <div id="demo-table2">
+                                <h2>Demographics</h2>
+                                <h4 id="demoName2">{neighborhood}</h4>
+
+                                <!-- Demographics from selected neighborhood-->
+                                <table width="100%" id="demographics2">
+                                    <tr>
+                                        <td align="right" width="50%"><b>Population:</b></td>
+                                        <td id="population2" align="left" width="50%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Households:</b></td>
+                                        <td id="households2" align="left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Median Income:</b></td>
+                                        <td id="income2" align="left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><b>Unemployment:</b></td>
+                                        <td id="unemployment2" align="left"></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <p class="notes">This demographics table is responding to function to get the data. Default is Fulton (pie chart using)</p>
 
                             <!-- Address from selected neighborhood-->
                             <!-- <div class="container">
@@ -213,12 +236,12 @@
                     <!-- need an event handler for the dropdown-->
                     <!-- Metric from the database-->
                     <div class="col-lg-8 mx-auto">
-                        <select class="form-control browser-default dropdown" id="dd"
-                            onchange="optionChanged(this.value)">
-                            <option value="">Population</option>
-                            <option value="">Number of Households</option>
-                            <option value="">Median Income ($)</option>
-                            <option value="">Unemployment (%)</option>
+                        <select class="form-control browser-default dropdown" id="dropdown"
+                            onchange="makeSunburstData(this.value)">
+                            <option value="nicedata">Population</option>
+                            <option value="nicedata2">Number of Households</option>
+                            <option value="nicedata3">Median Income ($)</option>
+                            <option value="nicedata4">Unemployment (%)</option>
                         </select>
                     </div>
                     <!-- sunburst div  -->
