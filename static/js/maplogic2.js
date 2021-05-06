@@ -24,10 +24,11 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
 // Links to get the geojson and csv data.
 var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "../static/data/StPaul_neighborhoods.geojson";
-var places = "../schema/Places_data_backup.csv"
-var neighborhoods = "../schema/Neighborhoods_data_backup.csv"
+var places = "../static/data/Places_forMap.geojson"
+// var neighborhoods = "../schema/Neighborhoods_data_backup.csv"
 // var walkscore = "../data/MSP_neighborhoods_walkability_address.csv"
 
+// console.log(places);
 
 // Grab Minneapolis GeoJSON data.
 d3.json(link1).then(function (data) {
@@ -76,7 +77,7 @@ d3.json(link1).then(function (data) {
           var households = d3.select("#households");
           var income = d3.select("#income");
           var unemployment = d3.select("#unemployment");
-                    
+
           name.html("ClickWorks demoName"); //populates Demographics h3
           population.html("ClickWorks Pop"); //populates table td
           households.html("ClickWorks Hou"); //populates table td
@@ -84,15 +85,15 @@ d3.json(link1).then(function (data) {
           unemployment.html("ClickWorks Emp"); //populates table td
 
           //Pie Chart
-          var name = d3.select("#pieName");          
+          var name = d3.select("#pieName");
           name.html("ClickWorks pieName"); //populates Demographics h3
-          
 
-        //   //Walkscore address
-        //   var address = d3.select("walkscore")
-        //  walkscore.html("Click Success"); //populates walkscore address
 
-    
+          //   //Walkscore address
+          //   var address = d3.select("walkscore")
+          //  walkscore.html("Click Success"); //populates walkscore address
+
+
         }
       });
       // Give each feature a pop-up with information pertinent to it
@@ -188,6 +189,43 @@ L.control.layers(null, overlayMaps, {
 
 
 
-//FUNCTION FOR DEMOGRAPHICS
+//Grab Places geojson
+// Grab Minneapolis GeoJSON data.
+d3.json(places).then(function (data) {
 
+  // //Function to color markers
+  // function getColor(placeType) {
+  //   placeType = "supermarket" ? "red" :
+  //   placeType = "park" ? "blue" :
+  //   placeType = "gym" ? "green" :
+  //   placeType = "school" ? "yellow" :
+  //   placeType = "church" ? "orange" :
+  //   placeType = "transit_station" ? "purple" : "purple";
+  // };
 
+  // console.log("Load place colors")
+  // console.log(placeType);
+
+  //Loop through data and grab features data
+  var placeFeatures = data.features;
+
+  console.log("Places geojson features");
+  console.log(placeFeatures);
+
+  for (var i = 0; i < placeFeatures.length; i++) {
+
+    //variables for markers
+    var coordinates = placeFeatures[i].geometry.coordinates;
+    var type = placeFeatures[i].properties.placeType;
+
+    //console.log("See places coordinates");
+    //console.log(coordinates);
+    //console.log("See places type");
+    //console.log(type);
+
+    // markers.addLayer(L.marker(coordinates[1], coordinates[0]));
+  };
+
+// myMap.addLayer(markers);
+
+});

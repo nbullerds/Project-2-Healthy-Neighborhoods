@@ -5,7 +5,6 @@ function DrawPieChart(neighborhood)
     d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
         console.log(`DrawPieChart(${neighborhood})`); 
-
         console.log("Showing all data:");
         console.log(data);
 
@@ -51,4 +50,4 @@ function DrawPieChart(neighborhood)
 }
 
 var selectedNeighborhood = "Fulton"; 
-DrawDemographics(selectedNeighborhood); 
+DrawPieChart(selectedNeighborhood); 
