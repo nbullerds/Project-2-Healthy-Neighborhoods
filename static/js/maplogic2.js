@@ -26,7 +26,7 @@ var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "../static/data/StPaul_neighborhoods.geojson";
 var places = "../schema/Places_data_backup.csv"
 var neighborhoods = "../schema/Neighborhoods_data_backup.csv"
-var walkscore = "../data/MSP_neighborhoods_walkability_address.csv"
+// var walkscore = "../data/MSP_neighborhoods_walkability_address.csv"
 
 
 // Grab Minneapolis GeoJSON data.
@@ -71,19 +71,26 @@ d3.json(link1).then(function (data) {
 
 
           //Demographics table
+          var name = d3.select("#demoName");
           var population = d3.select("#population");
           var households = d3.select("#households");
           var income = d3.select("#income");
           var unemployment = d3.select("#unemployment");
                     
-          population.html("Click Success"); //populates table td
-          households.html("Click Success"); //populates table td
-          income.html("Click Success"); //populates table td
-          unemployment.html("Click Success"); //populates table td
+          name.html("ClickWorks demoName"); //populates Demographics h3
+          population.html("ClickWorks Pop"); //populates table td
+          households.html("ClickWorks Hou"); //populates table td
+          income.html("ClickWorks Inc"); //populates table td
+          unemployment.html("ClickWorks Emp"); //populates table td
 
-          //Walkscore address
-          var address = d3.select("walkscore")
-         walkscore.html("Click Success"); //populates walkscore address
+          //Pie Chart
+          var name = d3.select("#pieName");          
+          name.html("ClickWorks pieName"); //populates Demographics h3
+          
+
+        //   //Walkscore address
+        //   var address = d3.select("walkscore")
+        //  walkscore.html("Click Success"); //populates walkscore address
 
     
         }

@@ -1,10 +1,9 @@
-console.log("pie.js is loaded");
+console.log("demographics.js is loaded");
 
-function DrawPieChart(neighborhood) 
-{
+function DrawDemographics(neighborhood) {
     d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
-        console.log(`DrawPieChart(${neighborhood})`); 
+        console.log(`DrawDemographics(${neighborhood})`); 
 
         console.log("Showing all data:");
         console.log(data);

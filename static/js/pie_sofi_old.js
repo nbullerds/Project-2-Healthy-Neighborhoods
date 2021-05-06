@@ -2,7 +2,7 @@ console.log("pie.js is loaded");
 
 function DrawPieChart(neighborhood) 
 {
-    d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+    d3.csv('../data/MSP_neighborhoods.csv').then(function (data) {
 
         console.log(`DrawPieChart(${neighborhood})`); 
 
@@ -15,11 +15,28 @@ function DrawPieChart(neighborhood)
 
         //pie chart starts here
         const cols = {
-            "0 to 17 years": ['AgeBelow18Prct'],
-            "18 to 34 years ": ['Age18To34Prct'],
-            "35 to 54 years": ['Age35To54Prct'],
-            "55 to 74 years": ['Age55To75Prct'],
-            "75 & older": ['AgeAbove75Prct'],
+            "0 to 17 years": [
+                'Under 5 years',
+                '5-9 years',
+                '10-14 years',
+                '15-17 years',
+            ],
+            "18 to 34 years ": [
+                '18-24 years',
+                '25-34 years',
+            ],
+            "35 to 54 years": [
+                '35-44 years',
+                '45-54 years',
+            ],
+            "55 to 74 years": [
+                '55-64 years',
+                '65-74 years',
+            ],
+            "75 & older": [
+                '75-84 years',
+                '85 years and older',
+            ],
         };
 
         const pieChartValues = Object.keys(cols).map(() => 0);//gets us array of 0s
@@ -51,4 +68,4 @@ function DrawPieChart(neighborhood)
 }
 
 var selectedNeighborhood = "Fulton"; 
-DrawDemographics(selectedNeighborhood); 
+DrawPieChart(selectedNeighborhood); 
