@@ -26,14 +26,29 @@ body {
 
 #maplist li {
   font-size: 1.25rem;
-
 }
 
 #sunburst {
   position: relative;
-  height: 600px;
+  height: 700px;
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
+.navbar {
+  background-color: #032f5a;
+}
+.homefooter {
+  background-color: #032f5a;
+}
+
+.homefooter,
+.phomefooter {
+  padding-top: 3rem !important;
+}
+
+.homefooter,
+.homefooter {
+  padding-bottom: 3rem !important;
+}

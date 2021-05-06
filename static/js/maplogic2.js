@@ -22,11 +22,11 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
 
 
 // Links to get the geojson and csv data.
-var link1 = "static/data/Minneapolis_neighborhoods.geojson";
-var link2 = "static/data/StPaul_neighborhoods.geojson";
-var places = "schema/Places_data_backup.csv"
-var neighborhoods = "schema/Neighborhoods_data_backup.csv"
-var walkscore = "data/MSP_neighborhoods_walkability_address.csv"
+var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
+var link2 = "../static/data/StPaul_neighborhoods.geojson";
+var places = "../schema/Places_data_backup.csv"
+var neighborhoods = "../schema/Neighborhoods_data_backup.csv"
+var walkscore = "../data/MSP_neighborhoods_walkability_address.csv"
 
 
 // Grab Minneapolis GeoJSON data.
@@ -65,20 +65,25 @@ d3.json(link1).then(function (data) {
         click: function (event) {
           myMap.fitBounds(event.target.getBounds());
 
-          console.log("Success of Function");
+          console.log("Showing clicked neighborhood");
+          var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
+          console.log(neighborhoodName);
 
+
+          //Demographics table
           var population = d3.select("#population");
           var households = d3.select("#households");
           var income = d3.select("#income");
           var unemployment = d3.select("#unemployment");
-          
-          // var neighborhood = d3.select("#popup-testing").text();
-          // console.log(neighborhood);
-          
+                    
           population.html("Click Success"); //populates table td
           households.html("Click Success"); //populates table td
           income.html("Click Success"); //populates table td
           unemployment.html("Click Success"); //populates table td
+
+          //Walkscore address
+          var address = d3.select("walkscore")
+         walkscore.html("Click Success"); //populates walkscore address
 
     
         }
@@ -87,7 +92,9 @@ d3.json(link1).then(function (data) {
       // layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
       layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3>");
     }
+
   }).addTo(myMap);
+
 });
 
 
@@ -172,75 +179,8 @@ L.control.layers(null, overlayMaps, {
 }).addTo(myMap);
 
 
-// // Omnivore will AJAX-request this file behind the scenes and parse it:
-// // note that there are considerations:
-// // - The CSV file must contain latitude and longitude values, in column
-// //   named roughly latitude and longitude
-// // - The file must either be on the same domain as the page that requests it,
-// //   or both the server it is requested from and the user's browser must
-// //   support CORS.
-// omnivore.csv('../schema/Places_forMap.csv')
-//     .on('ready', function(layer) {
-//       console.log("success");
-//         // An example of customizing marker styles based on an attribute.
-//         // In this case, the data, a CSV file, has a column called 'state'
-//         // with values referring to states. Your data might have different
-//         // values, so adjust to fit.
-//         this.eachLayer(function(marker) {
-//             if (marker.toGeoJSON().properties.placeType === 'supermarket') {
-//                 // The argument to L.mapbox.marker.icon is based on the
-//                 // simplestyle-spec: see that specification for a full
-//                 // description of options.
-//                 marker.setIcon(L.mapbox.marker.icon({
-//                     'marker-color': '#ff8888',
-//                     'marker-size': 'large'
-//                 }));
-//             } else {
-//                 marker.setIcon(L.mapbox.marker.icon({}));
-//             }
-//             // Bind a popup to each icon based on the same properties
-//             marker.bindPopup(marker.toGeoJSON().properties.city + ', ' +
-//                 marker.toGeoJSON().properties.placeType);
-//         });
-//     })
-//     .addTo(map);
 
 
+//FUNCTION FOR DEMOGRAPHICS
 
 
-
-
-
-
-// Benji's code sample
-// function whenthingisclicked(event){
-//   event.somethingorother
-
-//   updateToNeighborhood(neighborhoodthatwasclickedupon)
-// }
-
-// function updateToNeighborhood(neighborhood){
-//   var csv1, csv2, csv3;
-//   function doAThing(){
-//     if(sourcesRecived === 3){
-//       //do our stuff here
-
-//     }
-//   }
-//   kerry.csv('static/data/bycsv.csv', (data) => {
-//     csv1 = data;
-//     doAThing();
-//   });
-//   kerry.csv('static/data/mycsv2.csv', (data) => {
-//     csv2 = data;
-//     doAThing();
-//   });
-// }
-
-/// items to occupy dropdown
-//Grocery
-//Parks
-//Fitness Centers
-//Restaurants
-//Schools
-//Churches
