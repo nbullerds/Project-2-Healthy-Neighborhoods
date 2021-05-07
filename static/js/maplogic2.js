@@ -1,12 +1,53 @@
 console.log("maplogic2.js is loaded");
 
+function areaClickEvent(event) {
+  myMap.fitBounds(event.target.getBounds());
+
+  var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
+
+  console.log("SHOWING CLICKED NEIGHBORHOOD");
+  console.log(neighborhoodName);
+
+  kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
+
+    var myhooddata = data.find(x => x.Neighborhood === neighborhoodName)
+
+    console.log("MY HOOD DATA");
+    console.log(data);
+
+    //Demographics table
+    var name = d3.select("#demoName");
+    var population = d3.select("#population");
+    var households = d3.select("#households");
+    var income = d3.select("#income");
+    var unemployment = d3.select("#unemployment");
+    var transit = d3.select("#transit");
+    var walk = d3.select("#walk");
+
+
+    name.html(myhooddata.Neighborhood); //populates Demographics h3
+    population.html(myhooddata.NeighborhoodPopulation); //populates table td
+    households.html(myhooddata.NeighborhoodHouseholds); //populates table td
+    income.html(myhooddata.MedianIncome); //populates table td
+    unemployment.html((myhooddata.UnemploymentPrct * 100).toFixed(2)); //populates table td
+    transit.html((myhooddata.PublicTransportPrct * 100).toFixed(2)); //populates table td
+    walk.html((myhooddata.WalkBiketoWorkPrct * 100).toFixed(2)); //populates table td
+
+    //Pie Chart
+    var name = d3.select("#pieName");
+    name.html(myhooddata.Neighborhood); //populates Demographics h3
+
+    //NEED CLICK EVENT FOR PIE CHART
+  });
+
+}
+
 // Create map object
 var myMap = L.map("map", {
   // center: [44.9788, -93.2560],
   // center: [44.9537, -93.0900],
   center: [44.9637, -93.1700],
   zoom: 11
-
 });
 
 
@@ -31,7 +72,8 @@ var places = "../static/data/Places_forMap.geojson"
 // console.log(places);
 
 // Grab Minneapolis GeoJSON data.
-d3.json(link1).then(function (data) {
+//Benji's changes
+kerry.json(link1, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
     // Style each feature (in this case a neighborhood)
@@ -63,51 +105,19 @@ d3.json(link1).then(function (data) {
           });
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
-        click: function (event) {
-          myMap.fitBounds(event.target.getBounds());
-
-          console.log("Showing clicked neighborhood");
-          var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
-          console.log(neighborhoodName);
-
-
-          //Demographics table
-          var name = d3.select("#demoName");
-          var population = d3.select("#population");
-          var households = d3.select("#households");
-          var income = d3.select("#income");
-          var unemployment = d3.select("#unemployment");
-
-          name.html("ClickWorks demoName"); //populates Demographics h3
-          population.html("ClickWorks Pop"); //populates table td
-          households.html("ClickWorks Hou"); //populates table td
-          income.html("ClickWorks Inc"); //populates table td
-          unemployment.html("ClickWorks Emp"); //populates table td
-
-          //Pie Chart
-          var name = d3.select("#pieName");
-          name.html("ClickWorks pieName"); //populates Demographics h3
-
-
-          //   //Walkscore address
-          //   var address = d3.select("walkscore")
-          //  walkscore.html("Click Success"); //populates walkscore address
-
-
-        }
+        click: areaClickEvent,
       });
+
       // Give each feature a pop-up with information pertinent to it
       // layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
       layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3>");
     }
-
   }).addTo(myMap);
-
 });
 
 
 // Grab StPaul GeoJSON data.
-d3.json(link2).then(function (data) {
+kerry.json(link2, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
     // Style each feature (in this case a neighborhood)
@@ -138,11 +148,14 @@ d3.json(link2).then(function (data) {
             fillOpacity: 0.5
           });
         },
+        // // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
+        // click: function (event) {
+        //   myMap.fitBounds(event.target.getBounds());
+        // }
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
-        click: function (event) {
-          myMap.fitBounds(event.target.getBounds());
-        }
+        click: areaClickEvent,
       });
+
       // Give each feature a pop-up with information pertinent to it
       // layer.bindPopup("<h3>" + feature.properties.name2 + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
       layer.bindPopup("<h3>" + feature.properties.name2 + "</h3>");
@@ -157,75 +170,77 @@ var baseMaps = {
   "Map": map
 };
 
-// Initialize layer groups -- data from places csv
-// need correct names
-var layers = {
-  supermarket: new L.LayerGroup(),
-  park: new L.LayerGroup(),
-  gym: new L.LayerGroup,
-  restaurant: new L.LayerGroup,
-  school: new L.LayerGroup,
-  church: new L.LayerGroup,
-  transit_station: new L.LayerGroup
-};
+
 
 // Create overlay object to add to layer control
-var overlayMaps = {
-  "Churches": layers.church,
-  "Fitness Centers": layers.gym,
-  "Grocery Stores": layers.supermarket,
-  "Parks": layers.park,
-  "Restaurants": layers.restaurant,
-  "Schools": layers.school,
-  "Transit Stations": layers.transit_station
-};
-
-// Add layer control to map
-// Null to hide the baseMap
-L.control.layers(null, overlayMaps, {
-  //collapsed:false
-}).addTo(myMap);
 
 
+// //Grab Places geojson
+// // Grab Minneapolis GeoJSON data.
+// kerry.json(places, function (data) {
+
+//   // //Function to color markers
+//   // function getColor(placeType) {
+//   //   placeType = "supermarket" ? "red" :
+//   //   placeType = "park" ? "blue" :
+//   //   placeType = "gym" ? "green" :
+//   //   placeType = "school" ? "yellow" :
+//   //   placeType = "church" ? "orange" :
+//   //   placeType = "transit_station" ? "purple" : "purple";
+//   // };
+
+//   // console.log("Load place colors")
+//   // console.log(placeType);
+
+//   //Loop through data and grab features data
+//   var placeFeatures = data.features;
+
+//   console.log("Places geojson features");
+//   console.log(placeFeatures);
+
+//   var typeToMarkers = {};
+//   // var markers = [];
+//   for (var i = 0; i < placeFeatures.length; i++) {
+
+//     //variables for markers
+//     var coordinates = placeFeatures[i].geometry.coordinates;
+//     var type = placeFeatures[i].properties.placeType;
+
+//     var markers = typeToMarkers[type];
+//     if (markers === undefined)
+//       markers = typeToMarkers[type] = [];
+
+//     // if (i == 0) {
+//     //   console.log("See places coordinates");
+//     //   console.log(coordinates);
+//     //   console.log("See places type");
+//     //   console.log(type);
+//     // }
+
+//     markers.push(L.marker([coordinates[1], coordinates[0]]));
+//   }
+
+//   var newLayer = L.layerGroup(markers);
+//   myMap.addLayer(newLayer);
 
 
-//Grab Places geojson
-// Grab Minneapolis GeoJSON data.
-d3.json(places).then(function (data) {
+//   var overlayMaps = {
+//     "Churches": L.layerGroup(typeToMarkers.church),
+//     "Fitness Centers": L.layerGroup(typeToMarkers.gym),
+//     "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
+//     "Parks": L.layerGroup(typeToMarkers.park),
+//     "Restaurants": L.layerGroup(typeToMarkers.restaurant),
+//     "Schools": L.layerGroup(typeToMarkers.school),
+//     "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
+//   };
 
-  // //Function to color markers
-  // function getColor(placeType) {
-  //   placeType = "supermarket" ? "red" :
-  //   placeType = "park" ? "blue" :
-  //   placeType = "gym" ? "green" :
-  //   placeType = "school" ? "yellow" :
-  //   placeType = "church" ? "orange" :
-  //   placeType = "transit_station" ? "purple" : "purple";
-  // };
 
-  // console.log("Load place colors")
-  // console.log(placeType);
 
-  //Loop through data and grab features data
-  var placeFeatures = data.features;
+//   // Add layer control to map
+//   // Null to hide the baseMap
+//   L.control.layers(null, overlayMaps, {
+//     //collapsed:false
+//   }).addTo(myMap);
 
-  console.log("Places geojson features");
-  console.log(placeFeatures);
 
-  for (var i = 0; i < placeFeatures.length; i++) {
-
-    //variables for markers
-    var coordinates = placeFeatures[i].geometry.coordinates;
-    var type = placeFeatures[i].properties.placeType;
-
-    //console.log("See places coordinates");
-    //console.log(coordinates);
-    //console.log("See places type");
-    //console.log(type);
-
-    // markers.addLayer(L.marker(coordinates[1], coordinates[0]));
-  };
-
-// myMap.addLayer(markers);
-
-});
+// });

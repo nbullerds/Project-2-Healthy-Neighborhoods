@@ -1,67 +1,74 @@
 console.log("sunburst.js is loaded");
 
-// // Population Sunburst
-// function structureData(data) {
-//     const structureData = new Map();
-//     for (let i = 0; i < data.length; i++) {
-//         const currentRow = data[i];
-//         //find city
-//         if (!structureData.has(currentRow.City)) {
-//             structureData.set(currentRow.City, new Map());
-//         }
-//         const cityMap = structureData.get(currentRow.City);
-//         //find neighborhood
-//         cityMap.set(currentRow.Neighborhood, + currentRow['NeighborhoodPopulation']);
-//     }
-//     return structureData;
-// }
+// Population Sunburst
+function structureData(data) {
+    const structureData = new Map();
+    for (let i = 0; i < data.length; i++) {
+        const currentRow = data[i];
+        //find city
+        if (!structureData.has(currentRow.City)) {
+            structureData.set(currentRow.City, new Map());
+        }
+        const cityMap = structureData.get(currentRow.City);
+        //find neighborhood
+        cityMap.set(currentRow.Neighborhood, {
+            "The number of people living in the neighborhood": +currentRow.NeighborhoodPopulation,
+            houses: +currentRow['NeighborhoodHouseholds'],
+        });
+        // + currentRow['NeighborhoodPopulation'
+        // + currentRow['NeighborhoodPopulation');
+    }
+    return structureData;
+}
 
-// function makeSunburstData(nicedata) {
-//     const output = [];
-//     for (let [cityName, neighborhoods] of nicedata) {
-//         const neighborhoodArray = [];
-//         for (let [neighborhoodName, NeighborhoodPopulation] of neighborhoods) {
-//             neighborhoodArray.push({
-//                 name: neighborhoodName,
-//                 value: NeighborhoodPopulation, //this is the variable
-//             });
-//         }
-//         output.push({
-//             name: cityName,
-//             children: neighborhoodArray,
-//         });
-//     }
-//     return output;
-// };
-
-// d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
-    
-//     console.log("Show all neighborhood data:");
-//     console.log(data);
-    
-//     var nicerData = structureData(data);
-
-//     console.log("Show default of population:");
-//     console.log(nicerData);
-    
-//     var sunburstData = makeSunburstData(nicerData);
-
-//     console.log("Sunburst Population data:");
-//     console.log(sunburstData);
-
-//     // create a chart and set the data
-//     var chart = anychart.sunburst(sunburstData, "as-tree");
-
-//     // set the calculation mode
-//     chart.calculationMode("parent-independent");
-//     chart.container('sunburst');
-//     // style chart
-//     chart.width=("100%");
-//     chart.height=("100%");
-//     chart.draw();
-//     });
+function makeSunburstData(nicedata, mapFunc) {
+    const output = [];
+    for (let [cityName, neighborhoods] of nicedata) {
+        const neighborhoodArray = [];
+        for (let [neighborhoodName, neighborhoodData] of neighborhoods) {
+            neighborhoodArray.push({
+                name: neighborhoodName,
+                value: mapFunc(neighborhoodData), //this is the variable
+            });
+        }
+        output.push({
+            name: cityName,
+            children: neighborhoodArray,
+        });
+    }
+    return output;
+};
 
 
+function drawMeASunburst(option) {
+    kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
+
+        console.log("Show all neighborhood data:");
+        console.log(data);
+
+        var nicerData = structureData(data);
+
+        console.log("Show default of population:");
+        console.log(nicerData);
+
+        var sunburstData = makeSunburstData(nicerData, x => x[option]);
+
+        console.log("Sunburst Population data:");
+        console.log(sunburstData);
+
+        // create a chart and set the data
+        var chart = anychart.sunburst(sunburstData, "as-tree");
+
+        // set the calculation mode
+        chart.calculationMode("parent-independent");
+        chart.container('sunburst');
+        // style chart
+        chart.width = ("100%");
+        chart.height = ("100%");
+        chart.draw();
+    });
+
+}
 
 
 // // Households Sunburst
@@ -99,15 +106,15 @@ console.log("sunburst.js is loaded");
 // };
 
 // d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
-    
+
 //     console.log("Show all household data:");
 //     console.log(data);
-    
+
 //     var nicerData2 = structureData(data);
 
 //     console.log("Show default of households:");
 //     console.log(nicerData2);
-    
+
 //     var sunburstData2 = makeSunburstData(nicerData2);
 
 //     console.log("Sunburst Households data:");
@@ -183,10 +190,10 @@ d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data3) {
     chart.calculationMode("parent-independent");
     chart.container('sunburst');
     // style chart
-    chart.width=("100%");
-    chart.height=("100%");
+    chart.width = ("100%");
+    chart.height = ("100%");
     chart.draw();
-    });
+});
 
 
 
