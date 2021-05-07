@@ -61,6 +61,7 @@ d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
 
 
+
 // Households Sunburst
 function structureData2(data) {
     const structureData2 = new Map();
@@ -121,6 +122,7 @@ d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
     chart.height = ("100%");
     chart.draw();
 });
+
 
 
 
