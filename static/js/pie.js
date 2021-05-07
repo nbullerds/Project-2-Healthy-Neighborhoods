@@ -2,7 +2,7 @@ console.log("pie.js is loaded");
 
 function DrawPieChart(neighborhood) 
 {
-    d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+    kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
 
         console.log(`DrawPieChart(${neighborhood})`); 
         console.log("Showing all data:");

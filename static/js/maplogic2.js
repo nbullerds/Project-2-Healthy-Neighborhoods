@@ -37,6 +37,10 @@ function areaClickEvent(event) {
     name.html(myhooddata.Neighborhood); //populates Demographics h3
 
     //NEED CLICK EVENT FOR PIE CHART
+    //Line 111 has the click
+    //How to add that to pie.js to update the neighborhood?
+    //Do I need to put the pie.js code here instead of accessing the javascript from another file?
+    //Done with a function? https://gis.stackexchange.com/questions/121482/click-events-with-leaflet-and-geojson
 
   });
 }
@@ -65,13 +69,10 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
 var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "../static/data/StPaul_neighborhoods.geojson";
 var places = "../static/data/Places_forMap.geojson"
-// var neighborhoods = "../schema/Neighborhoods_data_backup.csv"
-// var walkscore = "../data/MSP_neighborhoods_walkability_address.csv"
 
 // console.log(places);
 
 // Grab Minneapolis GeoJSON data.
-//Benji's changes
 kerry.json(link1, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -85,6 +86,7 @@ kerry.json(link1, function (data) {
         weight: 1.5
       };
     },
+
     // Call on each feature
     onEachFeature: function (feature, layer) {
       // Set mouse events to change map styling
@@ -129,6 +131,7 @@ kerry.json(link2, function (data) {
         weight: 1.5
       };
     },
+
     // Call on each feature
     onEachFeature: function (feature, layer) {
       // Set mouse events to change map styling
@@ -147,17 +150,13 @@ kerry.json(link2, function (data) {
             fillOpacity: 0.5
           });
         },
-        // // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
-        // click: function (event) {
-        //   myMap.fitBounds(event.target.getBounds());
-        // }
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
         click: areaClickEvent,
       });
 
       // Give each feature a pop-up with information pertinent to it
-      // layer.bindPopup("<h3>" + feature.properties.name2 + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
-      layer.bindPopup("<h3>" + feature.properties.name2 + "</h3>");
+      // layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
+      layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3>");
     }
   }).addTo(myMap);
 });
