@@ -3,7 +3,11 @@ console.log("maplogic2.js is loaded");
 function areaClickEvent(event) {
   myMap.fitBounds(event.target.getBounds());
 
-  var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
+  var neighborhoodNameMpls = event.sourceTarget.feature.properties.BDNAME;
+  var neighborhoodNameStp = event.sourceTarget.feature.properties.name2;
+  // var neighborhoodName = (_.merge(neighborhoodNameMpls, neighborhoodNameStp);
+
+  var neighborhoodName = event.sourceTarget.feature.properties.name2;
 
   console.log("SHOWING CLICKED NEIGHBORHOOD");
   console.log(neighborhoodName);
@@ -156,7 +160,7 @@ kerry.json(link2, function (data) {
 
       // Give each feature a pop-up with information pertinent to it
       // layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3> <hr> <p>" + "demographics here or in a table? Population, Households, Ave Income, Unemployment" + "</p>");
-      layer.bindPopup("<h3>" + feature.properties.BDNAME + "</h3>");
+      layer.bindPopup("<h3>" + feature.properties.name2 + "</h3>");
     }
   }).addTo(myMap);
 });
@@ -174,18 +178,18 @@ var baseMaps = {
 // Grab Minneapolis GeoJSON data.
 kerry.json(places, function (data) {
 
-  //Function to color markers
-  function getColor(placeType) {
-    placeType = "supermarket" ? "red" :
-    placeType = "park" ? "blue" :
-    placeType = "gym" ? "green" :
-    placeType = "school" ? "yellow" :
-    placeType = "church" ? "orange" :
-    placeType = "transit_station" ? "purple" : "purple";
-  };
+  // //Function to color markers
+  // function getColor(colors) {
+  //   colors = "supermarket" ? "red" :
+  //     colors = "park" ? "blue" :
+  //       colors = "gym" ? "green" :
+  //         colors = "school" ? "yellow" :
+  //           colors = "church" ? "orange" :
+  //             colors = "transit_station" ? "purple" : "purple";
+  // };
 
-  console.log("Load place colors")
-  console.log(getColor);
+  // console.log("LOAD PLACE COLORS")
+  // console.log(getColor);
 
   //Loop through data and grab features data
   var placeFeatures = data.features;
@@ -212,36 +216,45 @@ kerry.json(places, function (data) {
     //   console.log(type);
     // }
 
-    markers.push(L.marker([coordinates[1], coordinates[0]]));
+    // markers.push(L.marker([coordinates[1], coordinates[0]], {
+    //     fillColor: getColor(colors)
+    // }));
+
+    // markers.push(L.marker([coordinates[1], coordinates[0]]));
+
+    markers.push(L.marker(([coordinates[1], coordinates[0]]), { 
+      style: (function (PlaceFeatures) {
+        switch (PlaceFeatures.PlaceType) {
+          case "supermarket": return { color: "red" };
+          case "park": return { color: "blue" };
+          case "gym": return { color: "green" };
+          case "school": return { color: "yellow" };
+          case "church": return { color: "blue" };
+          case "transit_station": return { color: "purple" };
+        }
+      })
+     }));
+
   }
 
   var newLayer = L.layerGroup(markers);
   myMap.addLayer(newLayer);
 
-  // var overlay1 = { "Churches": L.layerGroup(typeToMarkers.church) };
-  // var overlay2 = { "Fitness Centers": L.layerGroup(typeToMarkers.gym) };
-  // var overlay3 = { "Grocery Stores": L.layerGroup(typeToMarkers.supermarket) };
-  // var overlay4 = { "Parks": L.layerGroup(typeToMarkers.park) };
-  // var overlay5 = { "Restaurants": L.layerGroup(typeToMarkers.restaurant) };
-  // var overlay6 = { "Schools": L.layerGroup(typeToMarkers.school) };
-  // var overlay7 = { "Transit Stations": L.layerGroup(typeToMarkers.transit_station) };
-  // var overlayMaps = [overlay1, overlay2, overlay3, overlay4, overlay5, overlay6, overlay7];
+  var overlayMaps = {
+    "Churches": L.layerGroup(typeToMarkers.church),
+    "Fitness Centers": L.layerGroup(typeToMarkers.gym),
+    "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
+    "Parks": L.layerGroup(typeToMarkers.park),
+    "Restaurants": L.layerGroup(typeToMarkers.restaurant),
+    "Schools": L.layerGroup(typeToMarkers.school),
+    "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
+  };
 
-var overlayMaps = {
-  "Churches": L.layerGroup(typeToMarkers.church),
-  "Fitness Centers": L.layerGroup(typeToMarkers.gym),
-  "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
-  "Parks": L.layerGroup(typeToMarkers.park),
-  "Restaurants": L.layerGroup(typeToMarkers.restaurant),
-  "Schools": L.layerGroup(typeToMarkers.school),
-  "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
-};
-
-// Add layer control to map
-// Null to hide the baseMap
-var markerlayer = L.control.layers(null, overlayMaps)
-newLayer.remove();
-markerlayer.addTo(myMap);
+  // Add layer control to map
+  // Null to hide the baseMap
+  var markerlayer = L.control.layers(null, overlayMaps)
+  newLayer.remove();
+  markerlayer.addTo(myMap);
 
 
 });
