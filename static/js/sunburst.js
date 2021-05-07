@@ -11,24 +11,18 @@ function structureData(data) {
         }
         const cityMap = structureData.get(currentRow.City);
         //find neighborhood
-        cityMap.set(currentRow.Neighborhood, {
-            "Population": +currentRow.NeighborhoodPopulation,
-            "Number of Households": +currentRow.NeighborhoodHouseholds,
-            "Median Income ($)": +currentRow.MedianIncome,
-            "Unemployment (%)": +currentRow.UnemploymentPrct,
-        });
+        cityMap.set(currentRow.Neighborhood, + currentRow['NeighborhoodPopulation']);
     }
     return structureData;
 }
-
-function makeSunburstData(nicedata, mapFunc) {
+function makeSunburstData(nicedata) {
     const output = [];
     for (let [cityName, neighborhoods] of nicedata) {
         const neighborhoodArray = [];
-        for (let [neighborhoodName, neighborhoodData] of neighborhoods) {
+        for (let [neighborhoodName, NeighborhoodPopulation] of neighborhoods) {
             neighborhoodArray.push({
                 name: neighborhoodName,
-                value: mapFunc(neighborhoodData), //this is the variable
+                value: NeighborhoodPopulation, //this is the variable
             });
         }
         output.push({
@@ -39,224 +33,218 @@ function makeSunburstData(nicedata, mapFunc) {
     return output;
 };
 
-// var options = ["Population","Number of Households", "Median Income ($)", "Unemployment (%)"];
-// console.log(options);
+d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+    
+    console.log("Show all neighborhood data:");
+    console.log(data);
+    
+    var nicerData = structureData(data);
+    console.log("Show default of population:");
+    console.log(nicerData);
+    
+    var sunburstData = makeSunburstData(nicerData);
+    console.log("Sunburst Population data:");
+    console.log(sunburstData);
+    
+    // create a chart and set the data
+    var chart = anychart.sunburst(sunburstData, "as-tree");
+    
+    // set the calculation mode
+    chart.calculationMode("parent-independent");
+    chart.container('s1');
+   
+    // style chart
+    chart.width = ("100%");
+    chart.height = ("100%");
+    chart.draw();
+});
 
-function drawMeASunburst(option) {
-    kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
 
-        console.log("Sunburst neighborhood data:");
-        console.log(data);
 
-        var nicerData = structureData(data);
-
-        console.log("Show default of population:");
-        console.log(nicerData);
-
-        var sunburstData = makeSunburstData(nicerData, x => x[option]);
-
-        console.log("Sunburst Population data:");
-        console.log(sunburstData);
-
-        // create a chart and set the data
-        var chart = anychart.sunburst(sunburstData, "as-tree");
-
-        // set the calculation mode
-        chart.calculationMode("parent-independent");
-        chart.container('sunburst');
-        // style chart
-        chart.width = ("100%");
-        chart.height = ("100%");
-        chart.draw();
-    });
-
+// Households Sunburst
+function structureData2(data) {
+    const structureData2 = new Map();
+    for (let i = 0; i < data.length; i++) {
+        const currentRow = data[i];
+        //find city
+        if (!structureData2.has(currentRow.City)) {
+            structureData2.set(currentRow.City, new Map());
+        }
+        const cityMap = structureData2.get(currentRow.City);
+        //find neighborhood
+        cityMap.set(currentRow.Neighborhood, + currentRow['NeighborhoodHouseholds']);
+    }
+    return structureData2;
 }
 
+function makeSunburstData(nicedata) {
+    const output = [];
+    for (let [cityName, neighborhoods] of nicedata) {
+        const neighborhoodArray = [];
+        for (let [neighborhoodName, NeighborhoodHouseholds] of neighborhoods) {
+            neighborhoodArray.push({
+                name: neighborhoodName,
+                value: NeighborhoodHouseholds, //this is the variable
+            });
+        }
+        output.push({
+            name: cityName,
+            children: neighborhoodArray,
+        });
+    }
+    return output;
+};
 
-// // Households Sunburst
-// function structureData(data2) {
-//     const structureData = new Map();
-//     for (let i = 0; i < data2.length; i++) {
-//         const currentRow = data2[i];
-//         //find city
-//         if (!structureData.has(currentRow.City)) {
-//             structureData.set(currentRow.City, new Map());
-//         }
-//         const cityMap = structureData.get(currentRow.City);
-//         //find neighborhood
-//         cityMap.set(currentRow.Neighborhood, + currentRow['NeighborhoodHouseholds']);
-//     }
-//     return structureData;
-// }
+d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
-// function makeSunburstData(nicedata2) {
-//     const output = [];
-//     for (let [cityName, neighborhoods] of nicedata2) {
-//         const neighborhoodArray = [];
-//         for (let [neighborhoodName, NeighborhoodHouseholds] of neighborhoods) {
-//             neighborhoodArray.push({
-//                 name: neighborhoodName,
-//                 value: NeighborhoodHouseholds, //this is the variable
-//             });
-//         }
-//         output.push({
-//             name: cityName,
-//             children: neighborhoodArray,
-//         });
-//     }
-//     return output;
-// };
+    console.log("Show all household data:");
+    console.log(data);
 
-// d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+    var nicerdata = structureData2(data);
 
-//     console.log("Show all household data:");
-//     console.log(data);
+    console.log("Show default of households:");
+    console.log(nicerdata);
 
-//     var nicerData2 = structureData(data);
+    var sunburstdata = makeSunburstData(nicerdata);
 
-//     console.log("Show default of households:");
-//     console.log(nicerData2);
+    console.log("Sunburst Households data:");
+    console.log(sunburstdata);
 
-//     var sunburstData2 = makeSunburstData(nicerData2);
+    // create a chart and set the data
+    var chart = anychart.sunburst(sunburstdata, "as-tree");
 
-//     console.log("Sunburst Households data:");
-//     console.log(sunburstData2);
-
-//     // create a chart and set the data
-//     var chart = anychart.sunburst(sunburstData2, "as-tree");
-
-//     // set the calculation mode
-//     chart.calculationMode("parent-independent");
-//     chart.container('sunburst');
-//     // style chart
-//     chart.width=("100%");
-//     chart.height=("100%");
-//     chart.draw();
-//     });
+    // set the calculation mode
+    chart.calculationMode("parent-independent");
+    chart.container('s2');
+    // style chart
+    chart.width = ("100%");
+    chart.height = ("100%");
+    chart.draw();
+});
 
 
 
 // Income Sunburst
-// function structureData(data3) {
-//     const structureData = new Map();
-//     for (let i = 0; i < data3.length; i++) {
-//         const currentRow = data3[i];
-//         //find city
-//         if (!structureData.has(currentRow.City)) {
-//             structureData.set(currentRow.City, new Map());
-//         }
-//         const cityMap = structureData.get(currentRow.City);
-//         //find neighborhood
-//         cityMap.set(currentRow.Neighborhood, + currentRow['MedianIncome']);
-//     }
-//     return structureData;
-// }
+function structureData3(data) {
+    const structureData3 = new Map();
+    for (let i = 0; i < data.length; i++) {
+        const currentRow = data[i];
+        //find city
+        if (!structureData3.has(currentRow.City)) {
+            structureData3.set(currentRow.City, new Map());
+        }
+        const cityMap = structureData3.get(currentRow.City);
+        //find neighborhood
+        cityMap.set(currentRow.Neighborhood, + currentRow['MedianIncome']);
+    }
+    return structureData3;
+}
 
-// function makeSunburstData(nicedata3) {
-//     const output = [];
-//     for (let [cityName, neighborhoods] of nicedata3) {
-//         const neighborhoodArray = [];
-//         for (let [neighborhoodName, MedianIncome] of neighborhoods) {
-//             neighborhoodArray.push({
-//                 name: neighborhoodName,
-//                 value: MedianIncome, //this is the variable
-//             });
-//         }
-//         output.push({
-//             name: cityName,
-//             children: neighborhoodArray,
-//         });
-//     }
-//     return output;
-// };
+function makeSunburstData(nicedata) {
+    const output = [];
+    for (let [cityName, neighborhoods] of nicedata) {
+        const neighborhoodArray = [];
+        for (let [neighborhoodName, MedianIncome] of neighborhoods) {
+            neighborhoodArray.push({
+                name: neighborhoodName,
+                value: MedianIncome, //this is the variable
+            });
+        }
+        output.push({
+            name: cityName,
+            children: neighborhoodArray,
+        });
+    }
+    return output;
+};
 
-// d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data3) {
+d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
-//     console.log("Show all income data:");
-//     console.log(data3);
+    console.log("Show all income data:");
+    console.log(data);
 
-//     var nicerData3 = structureData(data3);
+    var nicerdata = structureData3(data);
 
-//     console.log("Show default of income:");
-//     console.log(nicerData3);
+    console.log("Show default of income:");
+    console.log(nicerdata);
 
-//     var sunburstData3 = makeSunburstData(nicerData3);
+    var sunburstdata = makeSunburstData(nicerdata);
 
-//     console.log("Sunburst income data:");
-//     console.log(sunburstData3);
+    console.log("Sunburst income data:");
+    console.log(sunburstdata);
 
-//     // create a chart and set the data
-//     var chart = anychart.sunburst(sunburstData3, "as-tree");
+    // create a chart and set the data
+    var chart = anychart.sunburst(sunburstdata, "as-tree");
 
-//     // set the calculation mode
-//     chart.calculationMode("parent-independent");
-//     chart.container('sunburst');
-//     // style chart
-//     chart.width = ("100%");
-//     chart.height = ("100%");
-//     chart.draw();
-// });
-
-
+    // set the calculation mode
+    chart.calculationMode("parent-independent");
+    chart.container('s3');
+    // style chart
+    chart.width = ("100%");
+    chart.height = ("100%");
+    chart.draw();
+});
 
 
-// // Unemployment Sunburst
-// function structureData(data4) {
-//     const structureData = new Map();
-//     for (let i = 0; i < data4.length; i++) {
-//         const currentRow = data4[i];
-//         //find city
-//         if (!structureData.has(currentRow.City)) {
-//             structureData.set(currentRow.City, new Map());
-//         }
-//         const cityMap = structureData.get(currentRow.City);
-//         //find neighborhood
-//         cityMap.set(currentRow.Neighborhood, + currentRow['UnemploymentPrct']);
-//     }
-//     return structureData;
-// }
 
-// function makeSunburstData(nicedata4) {
-//     const output = [];
-//     for (let [cityName, neighborhoods] of nicedata4) {
-//         const neighborhoodArray = [];
-//         for (let [neighborhoodName, UnemploymentPrct] of neighborhoods) {
-//             neighborhoodArray.push({
-//                 name: neighborhoodName,
-//                 value: UnemploymentPrct, //this is the variable
-//             });
-//         }
-//         output.push({
-//             name: cityName,
-//             children: neighborhoodArray,
-//         });
-//     }
-//     return output;
-// };
 
-// d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data4) {
+// Unemployment Sunburst
+function structureData4(data) {
+    const structureData4 = new Map();
+    for (let i = 0; i < data.length; i++) {
+        const currentRow = data[i];
+        //find city
+        if (!structureData4.has(currentRow.City)) {
+            structureData4.set(currentRow.City, new Map());
+        }
+        const cityMap = structureData4.get(currentRow.City);
+        //find neighborhood
+        cityMap.set(currentRow.Neighborhood, + currentRow['UnemploymentPrct']);
+    }
+    return structureData4;
+}
 
-//     console.log("Show all unemployment data:");
-//     console.log(data4);
+function makeSunburstData(nicedata) {
+    const output = [];
+    for (let [cityName, neighborhoods] of nicedata) {
+        const neighborhoodArray = [];
+        for (let [neighborhoodName, UnemploymentPrct] of neighborhoods) {
+            neighborhoodArray.push({
+                name: neighborhoodName,
+                value: UnemploymentPrct, //this is the variable
+            });
+        }
+        output.push({
+            name: cityName,
+            children: neighborhoodArray,
+        });
+    }
+    return output;
+};
 
-//     var nicerData4 = structureData(data4);
+d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
 
-//     console.log("Show default of unemployment:");
-//     console.log(nicerData4);
+    console.log("Show all unemployment data:");
+    console.log(data);
 
-//     var sunburstData4 = makeSunburstData(nicerData4);
+    var nicerdata = structureData4(data);
 
-//     console.log("Sunburst unemployment data:");
-//     console.log(sunburstData4);
+    console.log("Show default of unemployment:");
+    console.log(nicerdata);
 
-//     // create a chart and set the data
-//     var chart = anychart.sunburst(sunburstData4, "as-tree");
+    var sunburstdata = makeSunburstData(nicerdata);
 
-//     // set the calculation mode
-//     chart.calculationMode("parent-independent");
-//     chart.container('sunburst');
-//     // style chart
-//     chart.width=("100%");
-//     chart.height=("100%");
-//     chart.draw();
-//     });
+    console.log("Sunburst unemployment data:");
+    console.log(sunburstdata);
+
+    // create a chart and set the data
+    var chart = anychart.sunburst(sunburstdata, "as-tree");
+
+    // set the calculation mode
+    chart.calculationMode("parent-independent");
+    chart.container('s4');
+    // style chart
+    chart.width = ("100%");
+    chart.height = ("100%");
+    chart.draw();
+});

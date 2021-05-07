@@ -69,7 +69,7 @@
     </header>
 
 
-    <section id="intro">
+    <section <section <section id="intro">
         <div class="container text-center">
             <div class="row">
                 <div class="col-lg-12">
@@ -83,8 +83,8 @@
         </div>
     </section>
 
-
-    <section  class="bg-light" id="chart1">
+    
+    <section id="chart1">
         <div class="container text-center">
             <div class="container">
                 <div class="row">
@@ -160,6 +160,38 @@
 
                                 </table>
                             </div>
+                            <p class="notes">&nbsp;</p>
+
+                            
+                            <!-- Address from selected neighborhood-->
+                            <!-- <div class="container">
+                                <derives>
+                                    <h2>Walkability Score</h2> -->
+                                    <!-- walkscore div -->
+                                    <!-- <div id="walkscore">
+                                    <script type='text/javascript'>
+                                        var ws_wsid = 'g7a380191f9d647f8a2185262a0bfa9e1';
+                                        var ws_address = 'Minneapolis, MN';
+                                        var ws_format = 'wide';
+                                        var ws_width = '300';
+                                        var ws_height = '200';
+                                    </script>
+                                    <style type='text/css'>
+                                        #ws-walkscore-tile {
+                                            position: relative;
+                                            text-align: left
+                                        }
+
+                                        #ws-walkscore-tile * {
+                                            float: none;
+                                        }
+                                    </style>
+                                    <div id='ws-walkscore-tile'></div>
+                                    <script type='text/javascript'
+                                        src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
+                                        </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -185,32 +217,27 @@
     </section>
 
 
-    <section id="chart3&4">
-        <div class=" container text-center">
-            <h2>Compare Demographics Between Neighborhoods</h2>
-            <div class="row">
-                <div class="col-lg-6 mx-auto">
-                    <h3>Population</h3>
-                    <div id="s1"></div>
-                </div>
-                <div class="col-lg-6 mx-auto">
-                    <h3>Households</h3>
-                    <div id="s2"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="chart5&6">
+    <section id="chart3">
         <div class=" container text-center">
             <div class="row">
-                <div class="col-lg-6 mx-auto">
-                    <h3>Median Income ($)</h3>
-                    <div id="s3"></div>
-                </div>
-                <div class="col-lg-6 mx-auto">
-                    <h3>People Unemployed (%)</h3>
-                    <div id="s4"></div>
+                <div class="col-lg-12 mx-auto">
+                    <h2>Compare Demographics Between Neighborhoods</h2>
+                    <label><b>Choose a metric:</b></label>
+                    <!-- need an event handler for the dropdown-->
+                    <!-- Metric from the database-->
+                    <div class="col-lg-8 mx-auto">
+                        <select class="form-control browser-default dropdown" id="dropdown"
+                            onchange="optionChanged(this.value)">
+                            <option value="">Population</option>
+                            <option value="">Number of Households</option>
+                            <option value="">Median Income ($)</option>
+                            <option value="">Unemployment (%)</option>
+                        </select>
+                    </div>
+                    <!-- sunburst div  -->
+                    <div id="sunburst-container">
+                        <div id="sunburst"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -343,9 +370,8 @@
     <script type="text/javascript" src="../static/js/maplogic2.js"></script>
     <script type="text/javascript" src="../static/js/demographics.js"></script>
     <script type="text/javascript" src="../static/js/pie.js"></script>
-    <script type="text/javascript" src="../static/js/sunburst.js"></script>
-    <!-- <script type="text/javascript" src="../static/js/sunburst2.js"></script> -->
-    <!-- <script type="text/javascript" src="../static/js/charts.js"></script> -->
+     <script type="text/javascript" src="../static/js/sunburst.js"></script>
+     <!-- <script type="text/javascript" src="../static/js/charts.js"></script> -->
     <!--<script type="text/javascript" src="../static/js/places_table.js"></script>-->
 
     <!-- Bootstrap core JS-->

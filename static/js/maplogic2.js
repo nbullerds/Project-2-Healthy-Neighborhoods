@@ -7,7 +7,7 @@ function areaClickEvent(event) {
   var neighborhoodNameStp = event.sourceTarget.feature.properties.name2;
   // var neighborhoodName = (_.merge(neighborhoodNameMpls, neighborhoodNameStp);
 
-  var neighborhoodName = event.sourceTarget.feature.properties.name2;
+  var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
 
   console.log("SHOWING CLICKED NEIGHBORHOOD");
   console.log(neighborhoodName);
