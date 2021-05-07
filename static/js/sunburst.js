@@ -12,11 +12,11 @@ function structureData(data) {
         const cityMap = structureData.get(currentRow.City);
         //find neighborhood
         cityMap.set(currentRow.Neighborhood, {
-            "The number of people living in the neighborhood": +currentRow.NeighborhoodPopulation,
-            houses: +currentRow['NeighborhoodHouseholds'],
+            "Population": +currentRow.NeighborhoodPopulation,
+            "Number of Households": +currentRow.NeighborhoodHouseholds,
+            "Median Income ($)": +currentRow.MedianIncome,
+            "Unemployment (%)": +currentRow.UnemploymentPrct,
         });
-        // + currentRow['NeighborhoodPopulation'
-        // + currentRow['NeighborhoodPopulation');
     }
     return structureData;
 }
@@ -39,11 +39,13 @@ function makeSunburstData(nicedata, mapFunc) {
     return output;
 };
 
+// var options = ["Population","Number of Households", "Median Income ($)", "Unemployment (%)"];
+// console.log(options);
 
 function drawMeASunburst(option) {
     kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
 
-        console.log("Show all neighborhood data:");
+        console.log("Sunburst neighborhood data:");
         console.log(data);
 
         var nicerData = structureData(data);
@@ -135,65 +137,65 @@ function drawMeASunburst(option) {
 
 
 // Income Sunburst
-function structureData(data3) {
-    const structureData = new Map();
-    for (let i = 0; i < data3.length; i++) {
-        const currentRow = data3[i];
-        //find city
-        if (!structureData.has(currentRow.City)) {
-            structureData.set(currentRow.City, new Map());
-        }
-        const cityMap = structureData.get(currentRow.City);
-        //find neighborhood
-        cityMap.set(currentRow.Neighborhood, + currentRow['MedianIncome']);
-    }
-    return structureData;
-}
+// function structureData(data3) {
+//     const structureData = new Map();
+//     for (let i = 0; i < data3.length; i++) {
+//         const currentRow = data3[i];
+//         //find city
+//         if (!structureData.has(currentRow.City)) {
+//             structureData.set(currentRow.City, new Map());
+//         }
+//         const cityMap = structureData.get(currentRow.City);
+//         //find neighborhood
+//         cityMap.set(currentRow.Neighborhood, + currentRow['MedianIncome']);
+//     }
+//     return structureData;
+// }
 
-function makeSunburstData(nicedata3) {
-    const output = [];
-    for (let [cityName, neighborhoods] of nicedata3) {
-        const neighborhoodArray = [];
-        for (let [neighborhoodName, MedianIncome] of neighborhoods) {
-            neighborhoodArray.push({
-                name: neighborhoodName,
-                value: MedianIncome, //this is the variable
-            });
-        }
-        output.push({
-            name: cityName,
-            children: neighborhoodArray,
-        });
-    }
-    return output;
-};
+// function makeSunburstData(nicedata3) {
+//     const output = [];
+//     for (let [cityName, neighborhoods] of nicedata3) {
+//         const neighborhoodArray = [];
+//         for (let [neighborhoodName, MedianIncome] of neighborhoods) {
+//             neighborhoodArray.push({
+//                 name: neighborhoodName,
+//                 value: MedianIncome, //this is the variable
+//             });
+//         }
+//         output.push({
+//             name: cityName,
+//             children: neighborhoodArray,
+//         });
+//     }
+//     return output;
+// };
 
-d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data3) {
+// d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data3) {
 
-    console.log("Show all income data:");
-    console.log(data3);
+//     console.log("Show all income data:");
+//     console.log(data3);
 
-    var nicerData3 = structureData(data3);
+//     var nicerData3 = structureData(data3);
 
-    console.log("Show default of income:");
-    console.log(nicerData3);
+//     console.log("Show default of income:");
+//     console.log(nicerData3);
 
-    var sunburstData3 = makeSunburstData(nicerData3);
+//     var sunburstData3 = makeSunburstData(nicerData3);
 
-    console.log("Sunburst income data:");
-    console.log(sunburstData3);
+//     console.log("Sunburst income data:");
+//     console.log(sunburstData3);
 
-    // create a chart and set the data
-    var chart = anychart.sunburst(sunburstData3, "as-tree");
+//     // create a chart and set the data
+//     var chart = anychart.sunburst(sunburstData3, "as-tree");
 
-    // set the calculation mode
-    chart.calculationMode("parent-independent");
-    chart.container('sunburst');
-    // style chart
-    chart.width = ("100%");
-    chart.height = ("100%");
-    chart.draw();
-});
+//     // set the calculation mode
+//     chart.calculationMode("parent-independent");
+//     chart.container('sunburst');
+//     // style chart
+//     chart.width = ("100%");
+//     chart.height = ("100%");
+//     chart.draw();
+// });
 
 
 

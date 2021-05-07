@@ -24,7 +24,6 @@ function areaClickEvent(event) {
     var transit = d3.select("#transit");
     var walk = d3.select("#walk");
 
-
     name.html(myhooddata.Neighborhood); //populates Demographics h3
     population.html(myhooddata.NeighborhoodPopulation); //populates table td
     households.html(myhooddata.NeighborhoodHouseholds); //populates table td
@@ -33,13 +32,13 @@ function areaClickEvent(event) {
     transit.html((myhooddata.PublicTransportPrct * 100).toFixed(2)); //populates table td
     walk.html((myhooddata.WalkBiketoWorkPrct * 100).toFixed(2)); //populates table td
 
-    //Pie Chart
+    //Pie chart
     var name = d3.select("#pieName");
     name.html(myhooddata.Neighborhood); //populates Demographics h3
 
     //NEED CLICK EVENT FOR PIE CHART
-  });
 
+  });
 }
 
 // Create map object
@@ -171,76 +170,78 @@ var baseMaps = {
 };
 
 
+//Create overlay object to add to layer control
+//Grab Places geojson
+// Grab Minneapolis GeoJSON data.
+kerry.json(places, function (data) {
 
-// Create overlay object to add to layer control
+  // //Function to color markers
+  // function getColor(placeType) {
+  //   placeType = "supermarket" ? "red" :
+  //   placeType = "park" ? "blue" :
+  //   placeType = "gym" ? "green" :
+  //   placeType = "school" ? "yellow" :
+  //   placeType = "church" ? "orange" :
+  //   placeType = "transit_station" ? "purple" : "purple";
+  // };
 
+  // console.log("Load place colors")
+  // console.log(placeType);
 
-// //Grab Places geojson
-// // Grab Minneapolis GeoJSON data.
-// kerry.json(places, function (data) {
+  //Loop through data and grab features data
+  var placeFeatures = data.features;
 
-//   // //Function to color markers
-//   // function getColor(placeType) {
-//   //   placeType = "supermarket" ? "red" :
-//   //   placeType = "park" ? "blue" :
-//   //   placeType = "gym" ? "green" :
-//   //   placeType = "school" ? "yellow" :
-//   //   placeType = "church" ? "orange" :
-//   //   placeType = "transit_station" ? "purple" : "purple";
-//   // };
+  console.log("Places geojson features");
+  console.log(placeFeatures);
 
-//   // console.log("Load place colors")
-//   // console.log(placeType);
+  var typeToMarkers = {};
+  // var markers = [];
+  for (var i = 0; i < placeFeatures.length; i++) {
 
-//   //Loop through data and grab features data
-//   var placeFeatures = data.features;
+    //variables for markers
+    var coordinates = placeFeatures[i].geometry.coordinates;
+    var type = placeFeatures[i].properties.placeType;
 
-//   console.log("Places geojson features");
-//   console.log(placeFeatures);
+    var markers = typeToMarkers[type];
+    if (markers === undefined)
+      markers = typeToMarkers[type] = [];
 
-//   var typeToMarkers = {};
-//   // var markers = [];
-//   for (var i = 0; i < placeFeatures.length; i++) {
+    // if (i == 0) {
+    //   console.log("See places coordinates");
+    //   console.log(coordinates);
+    //   console.log("See places type");
+    //   console.log(type);
+    // }
 
-//     //variables for markers
-//     var coordinates = placeFeatures[i].geometry.coordinates;
-//     var type = placeFeatures[i].properties.placeType;
+    markers.push(L.marker([coordinates[1], coordinates[0]]));
+  }
 
-//     var markers = typeToMarkers[type];
-//     if (markers === undefined)
-//       markers = typeToMarkers[type] = [];
+  var newLayer = L.layerGroup(markers);
+  myMap.addLayer(newLayer);
 
-//     // if (i == 0) {
-//     //   console.log("See places coordinates");
-//     //   console.log(coordinates);
-//     //   console.log("See places type");
-//     //   console.log(type);
-//     // }
+  // var overlay1 = { "Churches": L.layerGroup(typeToMarkers.church) };
+  // var overlay2 = { "Fitness Centers": L.layerGroup(typeToMarkers.gym) };
+  // var overlay3 = { "Grocery Stores": L.layerGroup(typeToMarkers.supermarket) };
+  // var overlay4 = { "Parks": L.layerGroup(typeToMarkers.park) };
+  // var overlay5 = { "Restaurants": L.layerGroup(typeToMarkers.restaurant) };
+  // var overlay6 = { "Schools": L.layerGroup(typeToMarkers.school) };
+  // var overlay7 = { "Transit Stations": L.layerGroup(typeToMarkers.transit_station) };
+  // var overlayMaps = [overlay1, overlay2, overlay3, overlay4, overlay5, overlay6, overlay7];
 
-//     markers.push(L.marker([coordinates[1], coordinates[0]]));
-//   }
+var overlayMaps = {
+  "Churches": L.layerGroup(typeToMarkers.church),
+  "Fitness Centers": L.layerGroup(typeToMarkers.gym),
+  "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
+  "Parks": L.layerGroup(typeToMarkers.park),
+  "Restaurants": L.layerGroup(typeToMarkers.restaurant),
+  "Schools": L.layerGroup(typeToMarkers.school),
+  "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
+};
 
-//   var newLayer = L.layerGroup(markers);
-//   myMap.addLayer(newLayer);
+// Add layer control to map
+// Null to hide the baseMap
+L.control.layers(null, overlayMaps, {
+  // collapsed:false
+}).addTo(myMap);
 
-
-//   var overlayMaps = {
-//     "Churches": L.layerGroup(typeToMarkers.church),
-//     "Fitness Centers": L.layerGroup(typeToMarkers.gym),
-//     "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
-//     "Parks": L.layerGroup(typeToMarkers.park),
-//     "Restaurants": L.layerGroup(typeToMarkers.restaurant),
-//     "Schools": L.layerGroup(typeToMarkers.school),
-//     "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
-//   };
-
-
-
-//   // Add layer control to map
-//   // Null to hide the baseMap
-//   L.control.layers(null, overlayMaps, {
-//     //collapsed:false
-//   }).addTo(myMap);
-
-
-// });
+});
