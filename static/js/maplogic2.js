@@ -174,18 +174,18 @@ var baseMaps = {
 // Grab Minneapolis GeoJSON data.
 kerry.json(places, function (data) {
 
-  // //Function to color markers
-  // function getColor(placeType) {
-  //   placeType = "supermarket" ? "red" :
-  //   placeType = "park" ? "blue" :
-  //   placeType = "gym" ? "green" :
-  //   placeType = "school" ? "yellow" :
-  //   placeType = "church" ? "orange" :
-  //   placeType = "transit_station" ? "purple" : "purple";
-  // };
+  //Function to color markers
+  function getColor(placeType) {
+    placeType = "supermarket" ? "red" :
+    placeType = "park" ? "blue" :
+    placeType = "gym" ? "green" :
+    placeType = "school" ? "yellow" :
+    placeType = "church" ? "orange" :
+    placeType = "transit_station" ? "purple" : "purple";
+  };
 
-  // console.log("Load place colors")
-  // console.log(placeType);
+  console.log("Load place colors")
+  console.log(getColor);
 
   //Loop through data and grab features data
   var placeFeatures = data.features;
@@ -239,8 +239,9 @@ var overlayMaps = {
 
 // Add layer control to map
 // Null to hide the baseMap
-L.control.layers(null, overlayMaps, {
-  // collapsed:false
-}).addTo(myMap);
+var markerlayer = L.control.layers(null, overlayMaps)
+newLayer.remove();
+markerlayer.addTo(myMap);
+
 
 });
