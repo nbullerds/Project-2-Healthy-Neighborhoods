@@ -59,13 +59,11 @@ console.log("d3Cashing is loaded");
 			});
 
 			//execute request and handle the queue
-			d3Func(url).then(data => {
-				functionQueue.forEach(callback => callback(data));
-				urlMap.set(url, {
-					status: COMPLETE_STATUS,
-					data: data,
-				});
+			urlMap.set(url, {
+				status: COMPLETE_STATUS,
+				data: data,
 			});
+			d3Func(url).then(data => functionQueue.forEach(callback => callback(data)));
 		}
 
 		else {

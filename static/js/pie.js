@@ -1,9 +1,10 @@
 console.log("pie.js is loaded");
-const PIE_CHART_DATA_PATH = '/neighborhoods';
+// const PIE_CHART_DATA_PATH = '/neighborhoods';
 
 function DrawPieChart(neighborhood) 
 {
-    kerry.json(PIE_CHART_DATA_PATH, function (data) {
+    // kerry.json(PIE_CHART_DATA_PATH, function (data) {
+    d3.json("/neighborhoods").then(function (data) {
 
         console.log(`DrawPieChart(${neighborhood})`); 
         console.log("Showing all data:");
@@ -50,7 +51,7 @@ function DrawPieChart(neighborhood)
     }); 
 }
 
-kerry.json(PIE_CHART_DATA_PATH, () => {});
+// kerry.json(PIE_CHART_DATA_PATH, () => {});
 
 // var selectedNeighborhood = "Fulton"; 
 // DrawPieChart(selectedNeighborhood); 
