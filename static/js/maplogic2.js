@@ -19,8 +19,8 @@ function areaClickEvent(event, city, neighborhoodNameProperty) {
   console.log("SHOWING CLICKED NEIGHBORHOOD");
   console.log(neighborhoodName);
 
-  kerry.json('/neighborhoods', function (data) {
-  // d3.json("/neighborhoods").then(function (data) {
+  // kerry.json('/neighborhoods', function (data) {
+  d3.json("/neighborhoods").then(function (data) {
    
     var myhooddata = data.find(x => x.Neighborhood === neighborhoodName)
 
