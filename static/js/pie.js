@@ -50,7 +50,7 @@ function DrawPieChart(neighborhood)
     }); 
 }
 
-kerry.csv(PIE_CHART_DATA_PATH, () => {});
+// kerry.csv(PIE_CHART_DATA_PATH, console.log);
 
 // var selectedNeighborhood = "Fulton"; 
 // DrawPieChart(selectedNeighborhood); 
