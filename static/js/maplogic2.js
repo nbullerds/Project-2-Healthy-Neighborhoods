@@ -1,13 +1,20 @@
 console.log("maplogic2.js is loaded");
 
-function areaClickEvent(event) {
+
+// ----------------------------------------------------------------- //
+// Click function for map
+function areaClickEvent(event, city, neighborhoodNameProperty) {
   myMap.fitBounds(event.target.getBounds());
 
-  var neighborhoodNameMpls = event.sourceTarget.feature.properties.BDNAME;
-  var neighborhoodNameStp = event.sourceTarget.feature.properties.name2;
-  // var neighborhoodName = (_.merge(neighborhoodNameMpls, neighborhoodNameStp);
+  // var neighborhoodNameMpls = event.sourceTarget.feature.properties.BDNAME;
+  // var neighborhoodNameStp = event.sourceTarget.feature.properties.name2;
+  // var neighborhoodName = (_.merge(neighborhoodNameMpls, neighborhoodNameStp);  // didn't work
 
-  var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
+  // This reads only Mpls neighborhoods -- need to change ".BDNAME" to ".name2" to get St Paul
+  // How to combine?????? Merge didn't work.
+
+  var neighborhoodName = event.sourceTarget.feature.properties[neighborhoodNameProperty];  //swap this to get other city
+  // var neighborhoodName = event.sourceTarget.feature.properties.name2;  //swap this to get other city
 
   console.log("SHOWING CLICKED NEIGHBORHOOD");
   console.log(neighborhoodName);
@@ -40,6 +47,8 @@ function areaClickEvent(event) {
     var name = d3.select("#pieName");
     name.html(myhooddata.Neighborhood); //populates Demographics h3
 
+
+    DrawPieChart(neighborhoodName); 
     //NEED CLICK EVENT FOR PIE CHART
     //Line 111 has the click
     //How to add that to pie.js to update the neighborhood?
@@ -49,6 +58,8 @@ function areaClickEvent(event) {
   });
 }
 
+
+// ----------------------------------------------------------------- //
 // Create map object
 var myMap = L.map("map", {
   // center: [44.9788, -93.2560],
@@ -56,7 +67,6 @@ var myMap = L.map("map", {
   center: [44.9637, -93.1700],
   zoom: 11
 });
-
 
 // Add tile layer
 var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -68,7 +78,6 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
   accessToken: API_KEY
 }).addTo(myMap);
 
-
 // Links to get the geojson and csv data.
 var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "../static/data/StPaul_neighborhoods.geojson";
@@ -76,7 +85,9 @@ var places = "../static/data/Places_forMap.geojson"
 
 // console.log(places);
 
-// Grab Minneapolis GeoJSON data.
+
+// ----------------------------------------------------------------- //
+// Function to grab Minneapolis GeoJSON data.
 kerry.json(link1, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -110,7 +121,7 @@ kerry.json(link1, function (data) {
           });
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
-        click: areaClickEvent,
+        click: (e) => areaClickEvent(e, data, "BDNAME"),
       });
 
       // Give each feature a pop-up with information pertinent to it
@@ -121,12 +132,8 @@ kerry.json(link1, function (data) {
 });
 
 
-
-
-
-
-
-// Grab StPaul GeoJSON data.
+// ----------------------------------------------------------------- //
+// Function to grab StPaul GeoJSON data.
 kerry.json(link2, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -160,7 +167,7 @@ kerry.json(link2, function (data) {
           });
         },
         // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
-        click: areaClickEvent,
+        click: (e) => areaClickEvent(e, data, "name2"),
       });
 
       // Give each feature a pop-up with information pertinent to it
@@ -171,24 +178,20 @@ kerry.json(link2, function (data) {
 });
 
 
+// ----------------------------------------------------------------- //
+// Base map and Function to add layer control
 
-
-
-
-
-// Add layer control
 // Create basemap object
 var baseMaps = {
   "Map": map
 };
-
 
 //Create overlay object to add to layer control
 //Grab Places geojson
 // Grab Minneapolis GeoJSON data.
 kerry.json(places, function (data) {
 
-  // //Function to color markers
+  // //Function to color markers --can't get to work
   // function getColor(colors) {
   //   colors = "supermarket" ? "red" :
   //     colors = "park" ? "blue" :
@@ -230,40 +233,51 @@ kerry.json(places, function (data) {
     //     fillColor: getColor(colors)
     // }));
 
-    // markers.push(L.marker([coordinates[1], coordinates[0]]));
+    markers.push(L.marker([coordinates[1], coordinates[0]]));
 
-    markers.push(L.marker(([coordinates[1], coordinates[0]]), {
-      style: (function (PlaceFeatures) {
-        switch (PlaceFeatures.PlaceType) {
-          case "supermarket": return { color: "red" };
-          case "park": return { color: "blue" };
-          case "gym": return { color: "green" };
-          case "school": return { color: "purple" };
-          case "church": return { color: "lightblue" };
-          case "transit_station": return { color: "gray" };
-        }
-      })
-    }));
+    // // Tried again another way to color the marker -- gave up
+    // markers.push(L.marker(([coordinates[1], coordinates[0]]), {
+    //   style: (function (PlaceFeatures) {
+    //     switch (PlaceFeatures.PlaceType) {
+    //       case "supermarket": return { color: "red" };
+    //       case "park": return { color: "blue" };
+    //       case "gym": return { color: "green" };
+    //       case "school": return { color: "purple" };
+    //       case "church": return { color: "lightblue" };
+    //       case "transit_station": return { color: "gray" };
+    //     }
+    //   })
+    // }));
   }
 
   var newLayer = L.layerGroup(markers);
   myMap.addLayer(newLayer);
 
   var overlayMaps = {
-    "<span style='color: darkred'>Churches</span>": L.layerGroup(typeToMarkers.church),
-    "<span style='color: darkblue'>Fitness Centers</span>": L.layerGroup(typeToMarkers.gym),
-    "<span style='color: darkgreen'>Grocery Stores</span>": L.layerGroup(typeToMarkers.supermarket),
-    "<span style='color: orange'>Parks</span>": L.layerGroup(typeToMarkers.park),
-    "<span style='color: purple'>Restaurants</span>": L.layerGroup(typeToMarkers.restaurant),
-    "<span style='color: black'>Schools</span>": L.layerGroup(typeToMarkers.school),
-    "<span style='color: gray'>Transit Stations</span>": L.layerGroup(typeToMarkers.transit_station),
+    "Churches": L.layerGroup(typeToMarkers.church),
+    "Fitness Centers": L.layerGroup(typeToMarkers.gym),
+    "Grocery Stores": L.layerGroup(typeToMarkers.supermarket),
+    "Parks": L.layerGroup(typeToMarkers.park),
+    "Restaurants": L.layerGroup(typeToMarkers.restaurant),
+    "Schools": L.layerGroup(typeToMarkers.school),
+    "Transit Stations": L.layerGroup(typeToMarkers.transit_station),
   };
+
+  // // If colored markers get used, this is the code to color the text
+  // var overlayMaps = {
+  //   "<span style='color: darkred'>Churches</span>": L.layerGroup(typeToMarkers.church),
+  //   "<span style='color: darkblue'>Fitness Centers</span>": L.layerGroup(typeToMarkers.gym),
+  //   "<span style='color: darkgreen'>Grocery Stores</span>": L.layerGroup(typeToMarkers.supermarket),
+  //   "<span style='color: orange'>Parks</span>": L.layerGroup(typeToMarkers.park),
+  //   "<span style='color: purple'>Restaurants</span>": L.layerGroup(typeToMarkers.restaurant),
+  //   "<span style='color: black'>Schools</span>": L.layerGroup(typeToMarkers.school),
+  //   "<span style='color: gray'>Transit Stations</span>": L.layerGroup(typeToMarkers.transit_station),
+  // };
 
   // Add layer control to map
   // Null to hide the baseMap
   var markerlayer = L.control.layers(null, overlayMaps)
   newLayer.remove();
   markerlayer.addTo(myMap);
-
 
 });

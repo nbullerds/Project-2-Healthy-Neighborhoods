@@ -1,8 +1,9 @@
 console.log("pie.js is loaded");
+const PIE_CHART_DATA_PATH = '../schema/Neighborhoods_data_backup.csv';
 
 function DrawPieChart(neighborhood) 
 {
-    kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
+    kerry.csv(PIE_CHART_DATA_PATH, function (data) {
 
         console.log(`DrawPieChart(${neighborhood})`); 
         console.log("Showing all data:");
@@ -49,5 +50,7 @@ function DrawPieChart(neighborhood)
     }); 
 }
 
-var selectedNeighborhood = "Fulton"; 
-DrawPieChart(selectedNeighborhood); 
+kerry.csv(PIE_CHART_DATA_PATH, () => {});
+
+// var selectedNeighborhood = "Fulton"; 
+// DrawPieChart(selectedNeighborhood); 
