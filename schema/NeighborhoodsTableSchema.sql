@@ -9,7 +9,7 @@ CREATE TABLE "Neighborhoods" (
     "City" varchar(150)   NOT NULL,
     "NeighborhoodPopulation" int   NOT NULL,
     "NeighborhoodHouseholds" int   NOT NULL,
-    "AverageIncome" int   NOT NULL,
+    "MedianIncome" int   NOT NULL,
     "PublicTransportPrct" float   NOT NULL,
     "WalkBiketoWorkPrct" float   NOT NULL,
     "UnemploymentPrct" float   NOT NULL,
@@ -33,5 +33,6 @@ CREATE TABLE "Places" (
         "PlaceID"
      )
 );
+
 
 
