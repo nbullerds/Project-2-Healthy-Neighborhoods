@@ -5,8 +5,8 @@
 
 CREATE TABLE "Neighborhoods" (
     "NeighborhoodID"  SERIAL  NOT NULL,
-    "Neighborhood" varchar(50)   NOT NULL,
-    "City" varchar(50)   NOT NULL,
+    "Neighborhood" varchar(150)   NOT NULL,
+    "City" varchar(150)   NOT NULL,
     "NeighborhoodPopulation" int   NOT NULL,
     "NeighborhoodHouseholds" int   NOT NULL,
     "AverageIncome" int   NOT NULL,
@@ -25,12 +25,13 @@ CREATE TABLE "Neighborhoods" (
 
 CREATE TABLE "Places" (
     "PlaceID"  SERIAL  NOT NULL,
-    "PlaceName" varchar(50)   NOT NULL,
-    "PlaceType" varchar(50)   NOT NULL,
-    "PlaceLat" float   NOT NULL,
-    "PlaceLng" float   NOT NULL,
+    "PlaceName" varchar(150)   NOT NULL,
+    "PlaceType" varchar(150)   NOT NULL,
+    "latitude" float   NOT NULL,
+    "longitude" float   NOT NULL,
     CONSTRAINT "pk_Places" PRIMARY KEY (
         "PlaceID"
      )
 );
+
 
