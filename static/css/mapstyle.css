@@ -28,9 +28,33 @@ body {
   font-size: 1.25rem;
 }
 
-#sunburst {
+#s1 {
   position: relative;
-  height: 700px;
+  height: 500px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#s2 {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#s3 {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#s4 {
+  position: relative;
+  height: 500px;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -51,4 +75,24 @@ body {
 .homefooter,
 .homefooter {
   padding-bottom: 3rem !important;
+}
+
+.notes {
+  color: red;
+  font-size: 11px;
+}
+
+#demographics {
+  font-size: 16px;
+}
+
+#demographics td  {
+  padding-top: 8px;
+  padding-bottom: 16px;
+  vertical-align: middle;
+}
+
+.demotext {
+  font-size: 22px;
+  text-align: left;
 }

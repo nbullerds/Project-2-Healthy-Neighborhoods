@@ -1,7 +1,9 @@
+console.log("d3Cashing is loaded");
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 		typeof define === 'function' && define.amd ? define(['exports'], factory) :
-			(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.benji = global.benji || {}));
+			(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.kerry = global.kerry || {}));
 }(this, (function (exports) {
 	'use strict';
 

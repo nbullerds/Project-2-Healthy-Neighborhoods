@@ -1,11 +1,9 @@
-console.log("maplogic2.js is loaded");
+console.log("maplogic3.js is loaded");
 
+// ---------------------------------------------------------------------- //
+//Function for Minneapolis Click Event
 function areaClickEvent(event) {
   myMap.fitBounds(event.target.getBounds());
-
-  var neighborhoodNameMpls = event.sourceTarget.feature.properties.BDNAME;
-  var neighborhoodNameStp = event.sourceTarget.feature.properties.name2;
-  // var neighborhoodName = (_.merge(neighborhoodNameMpls, neighborhoodNameStp);
 
   var neighborhoodName = event.sourceTarget.feature.properties.BDNAME;
 
@@ -49,6 +47,57 @@ function areaClickEvent(event) {
   });
 }
 
+
+// // ---------------------------------------------------------------------- //
+// //Function for St Paul Click Event
+// function areaClickEvent(event) {
+//   myMap.fitBounds(event.target.getBounds());
+
+//   var neighborhoodName = event.sourceTarget.feature.properties.name2;
+
+//   console.log("SHOWING CLICKED NEIGHBORHOOD");
+//   console.log(neighborhoodName);
+
+//   kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
+
+//     var myhooddata = data.find(x => x.Neighborhood === neighborhoodName)
+
+//     console.log("MY HOOD DATA");
+//     console.log(data);
+
+//     //Demographics table
+//     var name = d3.select("#demoName");
+//     var population = d3.select("#population");
+//     var households = d3.select("#households");
+//     var income = d3.select("#income");
+//     var unemployment = d3.select("#unemployment");
+//     var transit = d3.select("#transit");
+//     var walk = d3.select("#walk");
+
+//     name.html(myhooddata.Neighborhood); //populates Demographics h3
+//     population.html(myhooddata.NeighborhoodPopulation); //populates table td
+//     households.html(myhooddata.NeighborhoodHouseholds); //populates table td
+//     income.html(myhooddata.MedianIncome); //populates table td
+//     unemployment.html((myhooddata.UnemploymentPrct * 100).toFixed(2)); //populates table td
+//     transit.html((myhooddata.PublicTransportPrct * 100).toFixed(2)); //populates table td
+//     walk.html((myhooddata.WalkBiketoWorkPrct * 100).toFixed(2)); //populates table td
+
+//     //Pie chart
+//     var name = d3.select("#pieName");
+//     name.html(myhooddata.Neighborhood); //populates Demographics h3
+
+//     //NEED CLICK EVENT FOR PIE CHART
+//     //Line 111 has the click
+//     //How to add that to pie.js to update the neighborhood?
+//     //Do I need to put the pie.js code here instead of accessing the javascript from another file?
+//     //Done with a function? https://gis.stackexchange.com/questions/121482/click-events-with-leaflet-and-geojson
+
+//   });
+// }
+
+
+// ---------------------------------------------------------------------- //
+// Generate the base map
 // Create map object
 var myMap = L.map("map", {
   // center: [44.9788, -93.2560],
@@ -56,7 +105,6 @@ var myMap = L.map("map", {
   center: [44.9637, -93.1700],
   zoom: 11
 });
-
 
 // Add tile layer
 var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -68,7 +116,6 @@ var map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
   accessToken: API_KEY
 }).addTo(myMap);
 
-
 // Links to get the geojson and csv data.
 var link1 = "../static/data/Minneapolis_neighborhoods.geojson";
 var link2 = "../static/data/StPaul_neighborhoods.geojson";
@@ -76,7 +123,11 @@ var places = "../static/data/Places_forMap.geojson"
 
 // console.log(places);
 
-// Grab Minneapolis GeoJSON data.
+
+
+
+// ---------------------------------------------------------------------- //
+// Function to grab Minneapolis GeoJSON data.
 kerry.json(link1, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -125,8 +176,8 @@ kerry.json(link1, function (data) {
 
 
 
-
-// Grab StPaul GeoJSON data.
+// ---------------------------------------------------------------------- //
+// Function to grab StPaul GeoJSON data.
 kerry.json(link2, function (data) {
   // Create a geoJSON layer with the retrieved data
   L.geoJson(data, {
@@ -175,17 +226,15 @@ kerry.json(link2, function (data) {
 
 
 
-
-// Add layer control
+// ---------------------------------------------------------------------- //
+// Add layer control and overlay for places markers
 // Create basemap object
 var baseMaps = {
   "Map": map
 };
 
-
-//Create overlay object to add to layer control
+//Function to create overlay object to add to layer control
 //Grab Places geojson
-// Grab Minneapolis GeoJSON data.
 kerry.json(places, function (data) {
 
   // //Function to color markers
@@ -264,6 +313,5 @@ kerry.json(places, function (data) {
   var markerlayer = L.control.layers(null, overlayMaps)
   newLayer.remove();
   markerlayer.addTo(myMap);
-
 
 });
