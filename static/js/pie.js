@@ -49,5 +49,5 @@ function DrawPieChart(neighborhood)
     }); 
 }
 
-var selectedNeighborhood = "Fulton"; 
-DrawPieChart(selectedNeighborhood); 
+// var selectedNeighborhood = "Fulton"; 
+// DrawPieChart(selectedNeighborhood); 
