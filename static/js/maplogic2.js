@@ -19,12 +19,15 @@ function areaClickEvent(event, city, neighborhoodNameProperty) {
   console.log("SHOWING CLICKED NEIGHBORHOOD");
   console.log(neighborhoodName);
 
-  kerry.csv('../schema/Neighborhoods_data_backup.csv', function (data) {
-
+  kerry.json('/neighborhoods', function (data) {
+  // d3.json("/neighborhoods").then(function (data) {
+   
     var myhooddata = data.find(x => x.Neighborhood === neighborhoodName)
 
     console.log("MY HOOD DATA");
     console.log(data);
+
+    
 
     //Demographics table
     var name = d3.select("#demoName");

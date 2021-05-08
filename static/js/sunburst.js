@@ -33,7 +33,7 @@ function makeSunburstData(nicedata) {
     return output;
 };
 
-d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+d3.json("/neighborhoods").then(function (data) {
     
     console.log("Show all neighborhood data:");
     console.log(data);
@@ -96,7 +96,7 @@ function makeSunburstData(nicedata) {
     return output;
 };
 
-d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+d3.json("/neighborhoods").then(function (data) {
 
     console.log("Show all household data:");
     console.log(data);
@@ -160,7 +160,7 @@ function makeSunburstData(nicedata) {
     return output;
 };
 
-d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+d3.json("/neighborhoods").then(function (data) {
 
     console.log("Show all income data:");
     console.log(data);
@@ -224,7 +224,7 @@ function makeSunburstData(nicedata) {
     return output;
 };
 
-d3.csv('../schema/Neighborhoods_data_backup.csv').then(function (data) {
+d3.json("/neighborhoods").then(function (data) {
 
     console.log("Show all unemployment data:");
     console.log(data);
