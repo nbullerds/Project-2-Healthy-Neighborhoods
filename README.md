@@ -1,4 +1,4 @@
-# Project-2-Healthy-Neighborhoods
+# Twin-Cities-Healthy-Neighborhoods-Visualization
 
 
 This dashboard demonstrates how to integrate Flask with HTML and JavaScript code. This project will note run on LiveServer, a Flask server must be used.
